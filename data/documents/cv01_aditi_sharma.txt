@@ -1,0 +1,29 @@
+CURRICULUM VITAE
+
+Aditi Sharma
+Flat 304, Green Meadows Apartments, HSR Layout, Bengaluru 560102
+Phone: +91 98765 43210
+Email: aditi.sharma@mailbox.example
+LinkedIn: linkedin.com/in/aditi-sharma-example
+Date of birth: 14 March 1999
+
+SUMMARY
+Data analyst with 3 years of experience in Python, SQL and machine learning, looking for a data scientist role.
+
+EXPERIENCE
+Data Analyst, BrightPath Analytics, Bengaluru (June 2023 to present)
+- Built churn prediction models in Python and scikit-learn.
+- Created Power BI dashboards used by 40 sales managers.
+
+Junior Analyst, Nimbus Retail, Pune (July 2021 to May 2023)
+- Cleaned and analysed sales data with SQL and Excel.
+- Automated weekly reports and saved 6 hours of manual work per week.
+
+EDUCATION
+B.Tech in Computer Science, Westbrook Institute of Technology, Mysuru (2017 to 2021)
+
+SKILLS
+Python, SQL, scikit-learn, pandas, Power BI, Git
+
+LANGUAGES
+English, Hindi, Kannada

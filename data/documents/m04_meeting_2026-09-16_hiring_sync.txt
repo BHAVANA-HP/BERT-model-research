@@ -1,0 +1,12 @@
+Meeting Notes: Hiring Sync, Backend Engineer Role
+Date: 16 September 2026
+
+Attendees: Ishaan Gupta (HR), Kavya Menon (Engineering Manager), Marcus Lee (Senior Engineer)
+
+- Three candidates are shortlisted.
+- Rohan Shetty (phone +91 99001 77889, email rohan.shetty@mailbox.example) has strong Java experience and can join from 1 November.
+- Lakshmi Pillai scored highest on the coding test but lives in Kochi and prefers remote work.
+- Marcus will run the system design round on 21 September.
+- Kavya must approve all offers before Ishaan sends them.
+
+This document is confidential. Do not share outside the hiring panel.

@@ -1,0 +1,14 @@
+Meeting Notes: Call with Meridian Bank
+Date: 14 September 2026 (video call)
+
+Participants: Thomas Becker (Head of Digital, Meridian Bank), Anita Desai (Account Manager, Lumina Systems), Vikram Nair (Solutions Architect, Lumina Systems)
+
+Summary:
+- Meridian Bank wants a chatbot for internal IT support at its Mumbai head office.
+- Thomas raised concerns about data residency. All data must stay inside India.
+- Vikram suggested running a small language model on the bank's own servers.
+- Budget approval is still pending from the bank's Chief Information Officer.
+- Anita will send a proposal by 25 September.
+
+Contact: Thomas Becker, thomas.becker@meridianbank.example, +91 22 5550 7788.
+Reference: Ticket MB-20931.

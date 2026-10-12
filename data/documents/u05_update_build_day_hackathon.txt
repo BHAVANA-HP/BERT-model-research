@@ -1,0 +1,9 @@
+Project Update: Lumina Build Day Hackathon
+Organiser: Fatima Khan (fatima.khan@luminasystems.example, +91 90080 44556)
+Date: 28 September 2026
+
+- The internal hackathon took place on 26 September at the Bengaluru office.
+- 14 teams took part, with 61 employees in total.
+- The winning team, Pixel Pioneers, built a tool that summarises meeting notes.
+- Feedback was positive. Most people asked for a 2-day format next year.
+- Prize vouchers will be sent by the end of October.

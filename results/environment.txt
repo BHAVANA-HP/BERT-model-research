@@ -1,0 +1,6 @@
+Python: 3.12.14
+PyTorch: 2.14.1+cpu
+Transformers: 5.19.0
+Sentence Transformers: 6.1.0
+CUDA available: False
+Torch CUDA build: None

@@ -1,0 +1,19 @@
+doc_id,filename,doc_type,persons,organisations,locations,emails,phones,other_identifiers
+m01,m01_meeting_2026-09-02_atlas_kickoff.txt,meeting notes,Priya Raman; Arjun Mehta; Sofia Alvarez; Daniel Okafor,Lumina Systems; Kestrel Logistics,Koramangala; Bengaluru; Pune,daniel.okafor@kestrel-logistics.example; arjun.mehta@luminasystems.example,+91 98450 11223,
+m02,m02_meeting_2026-09-09_sprint3_planning.txt,meeting notes,Neha Kulkarni; Rahul Verma; Chen Wei; Meera Iyer,AWS,Mumbai; Chennai; Kolkata,meera.iyer@luminasystems.example,+91 91234 56780,extension 2214
+m03,m03_meeting_2026-09-14_meridian_bank_call.txt,meeting notes,Thomas Becker; Anita Desai; Vikram Nair,Meridian Bank; Lumina Systems,Mumbai; India,thomas.becker@meridianbank.example,+91 22 5550 7788,Ticket MB-20931
+m04,m04_meeting_2026-09-16_hiring_sync.txt,meeting notes,Ishaan Gupta; Kavya Menon; Marcus Lee; Rohan Shetty; Lakshmi Pillai,,Kochi,rohan.shetty@mailbox.example,+91 99001 77889,
+m05,m05_meeting_2026-09-08_sprint1_retro.txt,meeting notes,Neha Kulkarni; Rahul Verma; Meera Iyer; Chen Wei,,,,,no contact details (control document)
+m06,m06_meeting_2026-09-18_leadership_offsite.txt,meeting notes,Anjali Rao; Sandeep Joshi; Fatima Khan; Laura Bennett,Palm Cove Resort,Goa; Bengaluru; San Francisco,bookings@palmcove-resort.example; laura.bennett@speakers.example,+91 832 555 0147; +1 415 555 0132,
+p01,p01_policy_leave.txt,policy,,Lumina Systems,,hr@luminasystems.example,+91 80 4000 1200,
+p02,p02_policy_remote_work.txt,policy,,Lumina Systems,,it-support@luminasystems.example,+91 80 4000 1250,
+p03,p03_policy_data_security.txt,policy,,Lumina Systems,,security@luminasystems.example,+91 80 4000 1299,
+p04,p04_policy_expenses.txt,policy,Sandeep Joshi,Lumina Systems,,finance@luminasystems.example,+91 80 4000 1230,
+u01,u01_update_atlas_week4.txt,project update,Priya Raman; Daniel Okafor; Sofia Alvarez,Kestrel Logistics,Pune,priya.raman@luminasystems.example,,
+u02,u02_update_orion_mobile_app.txt,project update,Karthik Reddy,Saffron Foods,Hyderabad,karthik.reddy@luminasystems.example,+91 98480 33210,
+u03,u03_update_orchid_data_migration.txt,project update,Pooja Nambiar,Orchid Health; Oracle,Chennai,pooja.nambiar@luminasystems.example,+91 98400 55671,
+u04,u04_update_q3_cloud_costs.txt,project update,Chen Wei,,,chen.wei@luminasystems.example,,no phone
+u05,u05_update_build_day_hackathon.txt,project update,Fatima Khan,,Bengaluru,fatima.khan@luminasystems.example,+91 90080 44556,
+cv01,cv01_aditi_sharma.txt,CV,Aditi Sharma,BrightPath Analytics; Nimbus Retail; Westbrook Institute of Technology,Bengaluru; Pune; Mysuru,aditi.sharma@mailbox.example,+91 98765 43210,DOB 14 March 1999; home address Flat 304 Green Meadows Apartments HSR Layout Bengaluru 560102; linkedin.com/in/aditi-sharma-example
+x01,x01_email_it_helpdesk_laptop.txt,email thread,Rahul Verma; Imran Sheikh,,,rahul.verma@luminasystems.example; it-support@luminasystems.example; imran.sheikh@luminasystems.example,,Employee ID LS-1042; asset tag LS-LT-2291
+x02,x02_incident_report_phishing.txt,incident report,Neha Kulkarni; Imran Sheikh,,,billing@lumina-systems-support.example; security@luminasystems.example,+91 80 4000 1299,Incident IR-2026-014; IP 203.0.113.45

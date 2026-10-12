@@ -1,0 +1,12 @@
+Project Update: Orion Mobile App
+Client: Saffron Foods, Hyderabad
+Project lead: Karthik Reddy (karthik.reddy@luminasystems.example, +91 98480 33210)
+Date: 24 September 2026
+
+Status: Green
+
+- The ordering and payment screens are complete.
+- The app is built with Flutter for Android and iOS.
+- 12 bugs are still open, 2 of them high priority.
+- Beta release to Saffron Foods staff is planned for 30 September.
+- Push notifications are the next feature.

@@ -1,0 +1,12 @@
+Project Update: Orchid Health Data Migration
+Client: Orchid Health, Chennai
+Lead: Pooja Nambiar (pooja.nambiar@luminasystems.example, +91 98400 55671)
+Date: 28 September 2026
+
+Status: Amber
+
+- Migrating 2.4 million records from a legacy Oracle database to PostgreSQL.
+- 1.6 million records are already moved and checked.
+- All test data is anonymised before it leaves the client network.
+- Cutover is planned for the weekend of 10 October.
+- Risk: some old records have invalid date formats. A cleanup script is being tested.

@@ -1,0 +1,22 @@
+Model: distilbert/distilbert-base-uncased-finetuned-sst-2-english
+Load time: 2.21 seconds
+
+Text: The team delivered the project ahead of schedule.
+Prediction: POSITIVE
+Score: 0.9980
+Inference time: 0.220 seconds
+
+Text: The application keeps crashing and the service is terrible.
+Prediction: NEGATIVE
+Score: 0.9998
+Inference time: 0.049 seconds
+
+Text: The meeting is scheduled for Tuesday afternoon but everyone is on leave.
+Prediction: NEGATIVE
+Score: 0.9724
+Inference time: 0.055 seconds
+
+Text: The new release improved performance and reduced errors.
+Prediction: POSITIVE
+Score: 0.9911
+Inference time: 0.060 seconds

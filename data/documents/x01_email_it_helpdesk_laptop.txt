@@ -1,0 +1,25 @@
+From: Rahul Verma <rahul.verma@luminasystems.example>
+To: it-support@luminasystems.example
+Date: 3 September 2026
+Subject: Laptop battery draining fast
+
+Hi team,
+
+My laptop battery now lasts under 2 hours. Employee ID: LS-1042. Asset tag: LS-LT-2291. Could someone check it this week?
+
+Thanks,
+Rahul
+
+---
+
+From: Imran Sheikh <imran.sheikh@luminasystems.example>
+To: Rahul Verma
+Date: 3 September 2026
+Subject: Re: Laptop battery draining fast
+
+Hi Rahul,
+
+Please bring the laptop to the IT desk on the 2nd floor tomorrow after 2 pm. We will swap the battery. Back up your files first.
+
+Imran
+IT Support

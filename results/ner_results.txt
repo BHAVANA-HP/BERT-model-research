@@ -1,0 +1,42 @@
+Model: dslim/bert-base-NER
+Document: m01_meeting_2026-09-02_atlas_kickoff.txt
+Load time: 196.81 seconds
+Inference time: 1.014 seconds
+
+Named entities:
+  Project Atlas | ORG | score=0.9972
+  Lumina Systems | ORG | score=0.9927
+  Koramangala | LOC | score=0.9674
+  Bengaluru | LOC | score=0.9974
+  P | PER | score=0.9992
+  ##riya Raman | PER | score=0.9968
+  A | PER | score=0.9993
+  ##r | PER | score=0.9956
+  ##jun Mehta | PER | score=0.9678
+  Lead | ORG | score=0.6847
+  Sofia Alvarez | PER | score=0.9987
+  Data Scientist | ORG | score=0.9168
+  Daniel Okaf | PER | score=0.8696
+  Kestrel Logistics | ORG | score=0.9968
+  Atlas | ORG | score=0.9982
+  Kestrel Logistics | ORG | score=0.9982
+  A | PER | score=0.9981
+  ##rjun | PER | score=0.4512
+  FastAPI | MISC | score=0.8500
+  PostgreSQL | MISC | score=0.6397
+  Sofia | LOC | score=0.5968
+  Python | MISC | score=0.9753
+  Daniel | PER | score=0.9984
+  P | PER | score=0.9958
+  ##riya | PER | score=0.8052
+  A | PER | score=0.9967
+  Sofia | LOC | score=0.5017
+  Kestrel | ORG | score=0.8572
+  Pune | LOC | score=0.9982
+
+Email addresses found by regex:
+  arjun.mehta@luminasystems.example
+  daniel.okafor@kestrel-logistics.example
+
+Phone-like strings found by regex:
+  +91 98450 11223

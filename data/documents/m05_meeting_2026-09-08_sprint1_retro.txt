@@ -1,0 +1,19 @@
+Meeting Notes: Sprint 1 Retrospective (Project Atlas)
+Date: 8 September 2026
+
+Attendees: Neha Kulkarni, Rahul Verma, Meera Iyer, Chen Wei
+
+What went well:
+- Daily standups were short and useful.
+- The team finished the data loading pipeline a day early.
+- Code reviews were quick.
+
+What to improve:
+- Requirements changed twice mid-sprint.
+- Test environments were unstable on Tuesday and Wednesday.
+- Documentation was written too late.
+
+Actions:
+- Meera to freeze scope once a sprint starts.
+- Chen Wei to fix the flaky test environment.
+- Everyone to update docs before closing a task.

@@ -1,0 +1,15 @@
+Meeting Notes: Project Atlas Kickoff
+Date: 2 September 2026
+Location: Lumina Systems office, Koramangala, Bengaluru
+
+Attendees: Priya Raman (Project Manager), Arjun Mehta (Backend Lead), Sofia Alvarez (Data Scientist), Daniel Okafor (Client Representative, Kestrel Logistics)
+
+Discussion:
+- Atlas will predict delivery delays for Kestrel Logistics using their shipment history.
+- Arjun proposed FastAPI with PostgreSQL. Sofia wants a simple baseline model in Python before anything complex.
+- Daniel asked for a status report every Friday.
+
+Action items:
+- Priya to email the project charter to daniel.okafor@kestrel-logistics.example by 5 September.
+- Arjun to set up the repository. Questions go to arjun.mehta@luminasystems.example or call +91 98450 11223.
+- Sofia to collect sample data from Kestrel's Pune warehouse.

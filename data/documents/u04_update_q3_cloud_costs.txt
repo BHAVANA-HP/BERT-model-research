@@ -1,0 +1,12 @@
+Project Update: Q3 Cloud Cost Review
+Prepared by: Chen Wei (chen.wei@luminasystems.example)
+Date: 30 September 2026
+
+- Total cloud spend for Q3 was Rs 18.4 lakh, up 12% from Q2.
+- The increase came from the Atlas staging servers and larger storage for the Orchid migration.
+- About 20% of compute instances ran idle outside working hours.
+
+Recommendations:
+- Shut down staging servers automatically at night and on weekends.
+- Buy reserved instances for the three servers that run all year.
+- Review storage every month and delete old snapshots.

@@ -1,0 +1,16 @@
+Meeting Notes: Sprint 3 Planning (Project Atlas)
+Date: 9 September 2026
+
+Attendees: Neha Kulkarni (QA), Rahul Verma (Frontend), Chen Wei (DevOps), Meera Iyer (Scrum Master)
+
+Notes:
+- Sprint goal: ship the delay-prediction dashboard to the staging server.
+- Rahul estimated 8 story points for the dashboard charts.
+- Chen Wei will set up the staging environment on AWS in the Mumbai region.
+- Neha flagged that test data is missing for the Chennai and Kolkata routes.
+
+Contacts:
+- Meera Iyer, meera.iyer@luminasystems.example, desk extension 2214
+- Chen Wei, mobile +91 91234 56780
+
+Next planning session: 23 September 2026.

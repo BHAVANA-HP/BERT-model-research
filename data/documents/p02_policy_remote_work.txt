@@ -1,0 +1,11 @@
+Lumina Systems Hybrid and Remote Work Policy
+Version 2.0, effective 1 June 2026
+
+1. Hybrid model: Employees work from the office 3 days a week and may work remotely 2 days a week. Teams choose their office days together.
+2. Core hours: Everyone must be reachable between 11:00 and 16:00 IST.
+3. Equipment: The company provides a laptop. Personal laptops must not be used for client work.
+4. Connection: Use the company VPN whenever you access internal systems from home.
+5. Workspace: Work from a quiet place where screens cannot be seen by others during client calls.
+6. Full-time remote work needs written approval from your department head and HR.
+
+IT help: it-support@luminasystems.example or +91 80 4000 1250.

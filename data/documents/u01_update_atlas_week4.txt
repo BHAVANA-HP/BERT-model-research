@@ -1,0 +1,18 @@
+Project Update: Atlas, Week 4
+Prepared by: Priya Raman (priya.raman@luminasystems.example)
+Date: 25 September 2026
+
+Status: Amber
+
+Progress:
+- Baseline delay prediction model reaches 71% accuracy on test data.
+- Dashboard prototype is running on the staging server.
+- Weekly report sent to Daniel Okafor at Kestrel Logistics.
+
+Blockers:
+- Shipment data from the Pune warehouse is 5 days late.
+- Two route tables have missing timestamps.
+
+Next week:
+- Sofia Alvarez will try gradient boosting to improve accuracy.
+- Retrain the model once the Pune data arrives.

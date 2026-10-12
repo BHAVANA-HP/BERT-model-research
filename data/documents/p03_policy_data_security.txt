@@ -1,0 +1,10 @@
+Lumina Systems Data Security Policy
+Version 4.1, effective 15 January 2026
+
+1. Classification: Data is Public, Internal, Confidential or Restricted. Customer data is always Confidential or higher.
+2. Passwords: At least 14 characters, never reused, stored only in the company password manager.
+3. Multi-factor authentication is required for email, VPN and cloud consoles.
+4. Devices: All laptops use full-disk encryption. Never store customer data on personal phones or laptops.
+5. Phishing: Do not click links in unexpected emails. Report suspicious messages to security@luminasystems.example.
+6. Incidents: Report any suspected data leak or lost device within 2 hours. Email security@luminasystems.example or call the 24x7 hotline on +91 80 4000 1299.
+7. Breaches involving personal data may need to be reported to regulators and clients. Only the Security Team makes that decision.

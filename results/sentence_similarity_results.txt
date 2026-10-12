@@ -1,0 +1,19 @@
+Model: sentence-transformers/all-MiniLM-L6-v2
+Model load time: 37.492 seconds
+Total embedding time: 0.232 seconds
+
+Sentence A: The employee can work from home.
+Sentence B: Staff are allowed to work remotely.
+Cosine similarity: 0.5528
+
+Sentence A: The project deadline has been delayed.
+Sentence B: The team will deliver the project earlier than planned.
+Cosine similarity: 0.6034
+
+Sentence A: The company requires employees to protect confidential data.
+Sentence B: Sensitive company information must be kept secure.
+Cosine similarity: 0.7829
+
+Sentence A: The meeting is scheduled for Monday.
+Sentence B: A laptop was delivered to the IT department.
+Cosine similarity: 0.0710

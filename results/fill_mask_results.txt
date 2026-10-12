@@ -1,0 +1,26 @@
+Model: google-bert/bert-base-uncased
+Load time: 8.72 seconds
+
+Input: The team will submit the [MASK] by Friday.
+Inference time: 1.311 seconds
+  results: 0.1534
+  report: 0.0791
+  application: 0.0474
+  list: 0.0246
+  challenge: 0.0157
+
+Input: Employees must protect confidential [MASK].
+Inference time: 0.201 seconds
+  information: 0.8444
+  ##ity: 0.0941
+  data: 0.0137
+  documents: 0.0058
+  ##ities: 0.0027
+
+Input: The project meeting is scheduled for [MASK].
+Inference time: 0.098 seconds
+  september: 0.1510
+  november: 0.1311
+  june: 0.0990
+  april: 0.0941
+  october: 0.0928

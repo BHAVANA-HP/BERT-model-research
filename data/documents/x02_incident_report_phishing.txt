@@ -1,0 +1,16 @@
+Security Incident Report IR-2026-014
+Date: 20 September 2026
+Reported by: Neha Kulkarni
+Handled by: Imran Sheikh, IT Support
+
+Summary:
+A phishing email pretending to be from the "Lumina IT Billing Team" was sent from billing@lumina-systems-support.example to 40 employees. It asked staff to log in to a fake payroll page hosted at IP address 203.0.113.45.
+
+Impact:
+- 3 employees clicked the link. 1 entered their password.
+- The password was reset within 30 minutes. No data was lost.
+
+Actions:
+- The sender domain was blocked.
+- All staff were reminded to report suspicious emails to security@luminasystems.example or the hotline on +91 80 4000 1299.
+- Phishing awareness training will be held in October.
