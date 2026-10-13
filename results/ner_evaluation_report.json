@@ -1,0 +1,1704 @@
+{
+  "experiment": "NER evaluation on all 18 documents",
+  "model": "dslim/bert-base-NER",
+  "aggregation_strategy": "first",
+  "documents_processed": 18,
+  "matching_rule": {
+    "persons_organisations_locations": "Case-insensitive exact match after whitespace normalization.",
+    "emails": "Case-insensitive exact match after whitespace normalization.",
+    "phones": "Exact match after removing non-digit characters.",
+    "partial_names": "Not counted as a match: 'Priya' does not match 'Priya Raman'.",
+    "deduplication": "Each normalized entity is counted once per document and entity type.",
+    "reason": "Exact normalized matching is consistent and reproducible. Partial names could incorrectly count an incomplete extraction as correct."
+  },
+  "metrics_by_type": {
+    "persons": {
+      "correct": 36,
+      "predicted": 51,
+      "found": 36,
+      "expected": 37,
+      "precision": 0.7059,
+      "recall": 0.973
+    },
+    "organisations": {
+      "correct": 14,
+      "predicted": 51,
+      "found": 14,
+      "expected": 17,
+      "precision": 0.2745,
+      "recall": 0.8235
+    },
+    "locations": {
+      "correct": 18,
+      "predicted": 25,
+      "found": 18,
+      "expected": 19,
+      "precision": 0.72,
+      "recall": 0.9474
+    },
+    "emails": {
+      "correct": 22,
+      "predicted": 22,
+      "found": 22,
+      "expected": 22,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "phones": {
+      "correct": 8,
+      "predicted": 8,
+      "found": 8,
+      "expected": 15,
+      "precision": 1.0,
+      "recall": 0.5333
+    }
+  },
+  "predictions": [
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Aditi",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Sharma",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Flat",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Green Meadows Apartments",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "HSR",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Layout",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Bengaluru",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "EXPERIENCE",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Analyst",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "BrightPath Analytics",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Nimbus Retail",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Pune",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Excel",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "EDUCATION",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Computer Science",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Westbrook Institute of Technology",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Mysuru",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Power",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Git LANGUAGES",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Hindi",
+      "source": "bert"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "emails",
+      "entity": "aditi.sharma@mailbox.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Project Atlas",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina Systems",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "locations",
+      "entity": "Koramangala",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "locations",
+      "entity": "Bengaluru",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "persons",
+      "entity": "Priya Raman",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "persons",
+      "entity": "Arjun Mehta",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Lead",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "persons",
+      "entity": "Sofia Alvarez",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Data Scientist",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "persons",
+      "entity": "Daniel Okafor",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Kestrel Logistics",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Atlas",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "persons",
+      "entity": "Arjun",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "locations",
+      "entity": "Sofia",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "persons",
+      "entity": "Daniel",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "persons",
+      "entity": "Priya",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Kestrel",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "locations",
+      "entity": "Pune",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "emails",
+      "entity": "daniel.okafor@kestrel-logistics.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "emails",
+      "entity": "arjun.mehta@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "Sprint 3",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "persons",
+      "entity": "Neha Kulkarni",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "QA",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "persons",
+      "entity": "Rahul Verma",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "Frontend",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "persons",
+      "entity": "Chen Wei",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "DevOps",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "persons",
+      "entity": "Meera Iyer",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "Scrum Master",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "persons",
+      "entity": "Rahul",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "AWS",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "locations",
+      "entity": "Mumbai",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "persons",
+      "entity": "Neha",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "locations",
+      "entity": "Chennai",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "locations",
+      "entity": "Kolkata",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "emails",
+      "entity": "meera.iyer@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "organisations",
+      "entity": "Meridian Bank",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "persons",
+      "entity": "Thomas Becker",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "organisations",
+      "entity": "Digital",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "persons",
+      "entity": "Anita Desai",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "organisations",
+      "entity": "Account Manager",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina Systems",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "persons",
+      "entity": "Vikram Nair",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "organisations",
+      "entity": "Solutions Architect",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "locations",
+      "entity": "Mumbai",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "persons",
+      "entity": "Thomas",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "locations",
+      "entity": "India",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "persons",
+      "entity": "Vikram",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "persons",
+      "entity": "Anita",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "emails",
+      "entity": "thomas.becker@meridianbank.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "phones",
+      "entity": "+91 22 5550 7788",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Ishaan Gupta",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Kavya Menon",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Marcus Lee",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Rohan Shetty",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Lakshmi Pillai",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "locations",
+      "entity": "Kochi",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Marcus",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Kavya",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Ishaan",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "emails",
+      "entity": "rohan.shetty@mailbox.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m05",
+      "filename": "m05_meeting_2026-09-08_sprint1_retro.txt",
+      "entity_type": "persons",
+      "entity": "Neha Kulkarni",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m05",
+      "filename": "m05_meeting_2026-09-08_sprint1_retro.txt",
+      "entity_type": "persons",
+      "entity": "Rahul Verma",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m05",
+      "filename": "m05_meeting_2026-09-08_sprint1_retro.txt",
+      "entity_type": "persons",
+      "entity": "Meera Iyer",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m05",
+      "filename": "m05_meeting_2026-09-08_sprint1_retro.txt",
+      "entity_type": "persons",
+      "entity": "Chen Wei",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m05",
+      "filename": "m05_meeting_2026-09-08_sprint1_retro.txt",
+      "entity_type": "persons",
+      "entity": "Meera",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "organisations",
+      "entity": "Leadership Offsite",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "persons",
+      "entity": "Anjali Rao",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "persons",
+      "entity": "Sandeep Joshi",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "persons",
+      "entity": "Fatima Khan",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "organisations",
+      "entity": "People Operations",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "locations",
+      "entity": "Palm Cove Resort",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "locations",
+      "entity": "Goa",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "persons",
+      "entity": "Sandeep",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "locations",
+      "entity": "Bengaluru",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "persons",
+      "entity": "Laura Bennett",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "locations",
+      "entity": "San Francisco",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "persons",
+      "entity": "Fatima",
+      "source": "bert"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "emails",
+      "entity": "bookings@palmcove-resort.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "emails",
+      "entity": "laura.bennett@speakers.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "phones",
+      "entity": "+91 832 555 0147",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "phones",
+      "entity": "+1 415 555 0132",
+      "source": "regex"
+    },
+    {
+      "doc_id": "p01",
+      "filename": "p01_policy_leave.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina Systems",
+      "source": "bert"
+    },
+    {
+      "doc_id": "p01",
+      "filename": "p01_policy_leave.txt",
+      "entity_type": "emails",
+      "entity": "hr@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "p01",
+      "filename": "p01_policy_leave.txt",
+      "entity_type": "phones",
+      "entity": "+91 80 4000 1200",
+      "source": "regex"
+    },
+    {
+      "doc_id": "p02",
+      "filename": "p02_policy_remote_work.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina Systems",
+      "source": "bert"
+    },
+    {
+      "doc_id": "p02",
+      "filename": "p02_policy_remote_work.txt",
+      "entity_type": "emails",
+      "entity": "it-support@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "p02",
+      "filename": "p02_policy_remote_work.txt",
+      "entity_type": "phones",
+      "entity": "+91 80 4000 1250",
+      "source": "regex"
+    },
+    {
+      "doc_id": "p03",
+      "filename": "p03_policy_data_security.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina Systems Data Security Policy",
+      "source": "bert"
+    },
+    {
+      "doc_id": "p03",
+      "filename": "p03_policy_data_security.txt",
+      "entity_type": "organisations",
+      "entity": "Security Team",
+      "source": "bert"
+    },
+    {
+      "doc_id": "p03",
+      "filename": "p03_policy_data_security.txt",
+      "entity_type": "emails",
+      "entity": "security@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "p03",
+      "filename": "p03_policy_data_security.txt",
+      "entity_type": "phones",
+      "entity": "+91 80 4000 1299",
+      "source": "regex"
+    },
+    {
+      "doc_id": "p04",
+      "filename": "p04_policy_expenses.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina Systems Expense",
+      "source": "bert"
+    },
+    {
+      "doc_id": "p04",
+      "filename": "p04_policy_expenses.txt",
+      "entity_type": "persons",
+      "entity": "Sandeep Joshi",
+      "source": "bert"
+    },
+    {
+      "doc_id": "p04",
+      "filename": "p04_policy_expenses.txt",
+      "entity_type": "emails",
+      "entity": "finance@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "p04",
+      "filename": "p04_policy_expenses.txt",
+      "entity_type": "phones",
+      "entity": "+91 80 4000 1230",
+      "source": "regex"
+    },
+    {
+      "doc_id": "u01",
+      "filename": "u01_update_atlas_week4.txt",
+      "entity_type": "organisations",
+      "entity": "Atlas",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u01",
+      "filename": "u01_update_atlas_week4.txt",
+      "entity_type": "persons",
+      "entity": "Priya Raman",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u01",
+      "filename": "u01_update_atlas_week4.txt",
+      "entity_type": "persons",
+      "entity": "Daniel Okafor",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u01",
+      "filename": "u01_update_atlas_week4.txt",
+      "entity_type": "organisations",
+      "entity": "Kestrel Logistics",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u01",
+      "filename": "u01_update_atlas_week4.txt",
+      "entity_type": "locations",
+      "entity": "Pune",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u01",
+      "filename": "u01_update_atlas_week4.txt",
+      "entity_type": "persons",
+      "entity": "Sofia Alvarez",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u01",
+      "filename": "u01_update_atlas_week4.txt",
+      "entity_type": "emails",
+      "entity": "priya.raman@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "u02",
+      "filename": "u02_update_orion_mobile_app.txt",
+      "entity_type": "organisations",
+      "entity": "Orion Mobile App",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u02",
+      "filename": "u02_update_orion_mobile_app.txt",
+      "entity_type": "organisations",
+      "entity": "Saffron Foods",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u02",
+      "filename": "u02_update_orion_mobile_app.txt",
+      "entity_type": "organisations",
+      "entity": "Hyderabad Project",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u02",
+      "filename": "u02_update_orion_mobile_app.txt",
+      "entity_type": "persons",
+      "entity": "Karthik Reddy",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u02",
+      "filename": "u02_update_orion_mobile_app.txt",
+      "entity_type": "emails",
+      "entity": "karthik.reddy@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "u03",
+      "filename": "u03_update_orchid_data_migration.txt",
+      "entity_type": "organisations",
+      "entity": "Orchid Health Data",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u03",
+      "filename": "u03_update_orchid_data_migration.txt",
+      "entity_type": "organisations",
+      "entity": "Orchid Health",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u03",
+      "filename": "u03_update_orchid_data_migration.txt",
+      "entity_type": "locations",
+      "entity": "Chennai",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u03",
+      "filename": "u03_update_orchid_data_migration.txt",
+      "entity_type": "persons",
+      "entity": "Pooja Nambiar",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u03",
+      "filename": "u03_update_orchid_data_migration.txt",
+      "entity_type": "organisations",
+      "entity": "Oracle",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u03",
+      "filename": "u03_update_orchid_data_migration.txt",
+      "entity_type": "emails",
+      "entity": "pooja.nambiar@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "u04",
+      "filename": "u04_update_q3_cloud_costs.txt",
+      "entity_type": "persons",
+      "entity": "Chen Wei",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u04",
+      "filename": "u04_update_q3_cloud_costs.txt",
+      "entity_type": "organisations",
+      "entity": "Atlas",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u04",
+      "filename": "u04_update_q3_cloud_costs.txt",
+      "entity_type": "organisations",
+      "entity": "Orchid",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u04",
+      "filename": "u04_update_q3_cloud_costs.txt",
+      "entity_type": "emails",
+      "entity": "chen.wei@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "u05",
+      "filename": "u05_update_build_day_hackathon.txt",
+      "entity_type": "persons",
+      "entity": "Fatima Khan",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u05",
+      "filename": "u05_update_build_day_hackathon.txt",
+      "entity_type": "locations",
+      "entity": "Bengaluru",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u05",
+      "filename": "u05_update_build_day_hackathon.txt",
+      "entity_type": "organisations",
+      "entity": "Pixel Pioneers",
+      "source": "bert"
+    },
+    {
+      "doc_id": "u05",
+      "filename": "u05_update_build_day_hackathon.txt",
+      "entity_type": "emails",
+      "entity": "fatima.khan@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "x01",
+      "filename": "x01_email_it_helpdesk_laptop.txt",
+      "entity_type": "persons",
+      "entity": "Rahul Verma",
+      "source": "bert"
+    },
+    {
+      "doc_id": "x01",
+      "filename": "x01_email_it_helpdesk_laptop.txt",
+      "entity_type": "persons",
+      "entity": "Rahul",
+      "source": "bert"
+    },
+    {
+      "doc_id": "x01",
+      "filename": "x01_email_it_helpdesk_laptop.txt",
+      "entity_type": "persons",
+      "entity": "Imran Sheikh",
+      "source": "bert"
+    },
+    {
+      "doc_id": "x01",
+      "filename": "x01_email_it_helpdesk_laptop.txt",
+      "entity_type": "organisations",
+      "entity": "Imran",
+      "source": "bert"
+    },
+    {
+      "doc_id": "x01",
+      "filename": "x01_email_it_helpdesk_laptop.txt",
+      "entity_type": "emails",
+      "entity": "rahul.verma@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "x01",
+      "filename": "x01_email_it_helpdesk_laptop.txt",
+      "entity_type": "emails",
+      "entity": "it-support@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "x01",
+      "filename": "x01_email_it_helpdesk_laptop.txt",
+      "entity_type": "emails",
+      "entity": "imran.sheikh@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "x02",
+      "filename": "x02_incident_report_phishing.txt",
+      "entity_type": "persons",
+      "entity": "Neha Kulkarni",
+      "source": "bert"
+    },
+    {
+      "doc_id": "x02",
+      "filename": "x02_incident_report_phishing.txt",
+      "entity_type": "persons",
+      "entity": "Imran Sheikh",
+      "source": "bert"
+    },
+    {
+      "doc_id": "x02",
+      "filename": "x02_incident_report_phishing.txt",
+      "entity_type": "organisations",
+      "entity": "IT Support",
+      "source": "bert"
+    },
+    {
+      "doc_id": "x02",
+      "filename": "x02_incident_report_phishing.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina IT Billing Team",
+      "source": "bert"
+    },
+    {
+      "doc_id": "x02",
+      "filename": "x02_incident_report_phishing.txt",
+      "entity_type": "emails",
+      "entity": "billing@lumina-systems-support.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "x02",
+      "filename": "x02_incident_report_phishing.txt",
+      "entity_type": "emails",
+      "entity": "security@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "x02",
+      "filename": "x02_incident_report_phishing.txt",
+      "entity_type": "phones",
+      "entity": "+91 80 4000 1299",
+      "source": "regex"
+    }
+  ],
+  "misses": [
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "persons",
+      "entity": "Aditi Sharma"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "organisations",
+      "entity": "Palm Cove Resort"
+    },
+    {
+      "doc_id": "p03",
+      "filename": "p03_policy_data_security.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina Systems"
+    },
+    {
+      "doc_id": "p04",
+      "filename": "p04_policy_expenses.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina Systems"
+    },
+    {
+      "doc_id": "u02",
+      "filename": "u02_update_orion_mobile_app.txt",
+      "entity_type": "locations",
+      "entity": "Hyderabad"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "phones",
+      "entity": "+91 98765 43210"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "phones",
+      "entity": "+91 98450 11223"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "phones",
+      "entity": "+91 91234 56780"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "phones",
+      "entity": "+91 99001 77889"
+    },
+    {
+      "doc_id": "u02",
+      "filename": "u02_update_orion_mobile_app.txt",
+      "entity_type": "phones",
+      "entity": "+91 98480 33210"
+    },
+    {
+      "doc_id": "u03",
+      "filename": "u03_update_orchid_data_migration.txt",
+      "entity_type": "phones",
+      "entity": "+91 98400 55671"
+    },
+    {
+      "doc_id": "u05",
+      "filename": "u05_update_build_day_hackathon.txt",
+      "entity_type": "phones",
+      "entity": "+91 90080 44556"
+    }
+  ],
+  "false_positives": [
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "persons",
+      "entity": "Arjun"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "persons",
+      "entity": "Daniel"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "persons",
+      "entity": "Priya"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "persons",
+      "entity": "Neha"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "persons",
+      "entity": "Rahul"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "persons",
+      "entity": "Anita"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "persons",
+      "entity": "Thomas"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "persons",
+      "entity": "Vikram"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Ishaan"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Kavya"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "persons",
+      "entity": "Marcus"
+    },
+    {
+      "doc_id": "m05",
+      "filename": "m05_meeting_2026-09-08_sprint1_retro.txt",
+      "entity_type": "persons",
+      "entity": "Meera"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "persons",
+      "entity": "Fatima"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "persons",
+      "entity": "Sandeep"
+    },
+    {
+      "doc_id": "x01",
+      "filename": "x01_email_it_helpdesk_laptop.txt",
+      "entity_type": "persons",
+      "entity": "Rahul"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Analyst"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Computer Science"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "EDUCATION"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Excel"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "EXPERIENCE"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Git LANGUAGES"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "HSR"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Power"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "organisations",
+      "entity": "Sharma"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Atlas"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Data Scientist"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Kestrel"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Lead"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "organisations",
+      "entity": "Project Atlas"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "DevOps"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "Frontend"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "QA"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "Scrum Master"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "organisations",
+      "entity": "Sprint 3"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "organisations",
+      "entity": "Account Manager"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "organisations",
+      "entity": "Digital"
+    },
+    {
+      "doc_id": "m03",
+      "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+      "entity_type": "organisations",
+      "entity": "Solutions Architect"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "organisations",
+      "entity": "Leadership Offsite"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "organisations",
+      "entity": "People Operations"
+    },
+    {
+      "doc_id": "p03",
+      "filename": "p03_policy_data_security.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina Systems Data Security Policy"
+    },
+    {
+      "doc_id": "p03",
+      "filename": "p03_policy_data_security.txt",
+      "entity_type": "organisations",
+      "entity": "Security Team"
+    },
+    {
+      "doc_id": "p04",
+      "filename": "p04_policy_expenses.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina Systems Expense"
+    },
+    {
+      "doc_id": "u01",
+      "filename": "u01_update_atlas_week4.txt",
+      "entity_type": "organisations",
+      "entity": "Atlas"
+    },
+    {
+      "doc_id": "u02",
+      "filename": "u02_update_orion_mobile_app.txt",
+      "entity_type": "organisations",
+      "entity": "Hyderabad Project"
+    },
+    {
+      "doc_id": "u02",
+      "filename": "u02_update_orion_mobile_app.txt",
+      "entity_type": "organisations",
+      "entity": "Orion Mobile App"
+    },
+    {
+      "doc_id": "u03",
+      "filename": "u03_update_orchid_data_migration.txt",
+      "entity_type": "organisations",
+      "entity": "Orchid Health Data"
+    },
+    {
+      "doc_id": "u04",
+      "filename": "u04_update_q3_cloud_costs.txt",
+      "entity_type": "organisations",
+      "entity": "Atlas"
+    },
+    {
+      "doc_id": "u04",
+      "filename": "u04_update_q3_cloud_costs.txt",
+      "entity_type": "organisations",
+      "entity": "Orchid"
+    },
+    {
+      "doc_id": "u05",
+      "filename": "u05_update_build_day_hackathon.txt",
+      "entity_type": "organisations",
+      "entity": "Pixel Pioneers"
+    },
+    {
+      "doc_id": "x01",
+      "filename": "x01_email_it_helpdesk_laptop.txt",
+      "entity_type": "organisations",
+      "entity": "Imran"
+    },
+    {
+      "doc_id": "x02",
+      "filename": "x02_incident_report_phishing.txt",
+      "entity_type": "organisations",
+      "entity": "IT Support"
+    },
+    {
+      "doc_id": "x02",
+      "filename": "x02_incident_report_phishing.txt",
+      "entity_type": "organisations",
+      "entity": "Lumina IT Billing Team"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Aditi"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Flat"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Green Meadows Apartments"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Hindi"
+    },
+    {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "locations",
+      "entity": "Layout"
+    },
+    {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "locations",
+      "entity": "Sofia"
+    },
+    {
+      "doc_id": "m06",
+      "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+      "entity_type": "locations",
+      "entity": "Palm Cove Resort"
+    }
+  ],
+  "performance": {
+    "per_document": [
+      {
+        "doc_id": "cv01",
+        "filename": "cv01_aditi_sharma.txt",
+        "processing_seconds": 6.084739,
+        "prediction_count": 21
+      },
+      {
+        "doc_id": "m01",
+        "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+        "processing_seconds": 0.614511,
+        "prediction_count": 20
+      },
+      {
+        "doc_id": "m02",
+        "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+        "processing_seconds": 0.444815,
+        "prediction_count": 16
+      },
+      {
+        "doc_id": "m03",
+        "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
+        "processing_seconds": 0.413223,
+        "prediction_count": 15
+      },
+      {
+        "doc_id": "m04",
+        "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+        "processing_seconds": 0.363164,
+        "prediction_count": 10
+      },
+      {
+        "doc_id": "m05",
+        "filename": "m05_meeting_2026-09-08_sprint1_retro.txt",
+        "processing_seconds": 0.376999,
+        "prediction_count": 5
+      },
+      {
+        "doc_id": "m06",
+        "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
+        "processing_seconds": 0.39325,
+        "prediction_count": 16
+      },
+      {
+        "doc_id": "p01",
+        "filename": "p01_policy_leave.txt",
+        "processing_seconds": 0.418903,
+        "prediction_count": 3
+      },
+      {
+        "doc_id": "p02",
+        "filename": "p02_policy_remote_work.txt",
+        "processing_seconds": 0.391276,
+        "prediction_count": 3
+      },
+      {
+        "doc_id": "p03",
+        "filename": "p03_policy_data_security.txt",
+        "processing_seconds": 0.676565,
+        "prediction_count": 4
+      },
+      {
+        "doc_id": "p04",
+        "filename": "p04_policy_expenses.txt",
+        "processing_seconds": 0.466832,
+        "prediction_count": 4
+      },
+      {
+        "doc_id": "u01",
+        "filename": "u01_update_atlas_week4.txt",
+        "processing_seconds": 0.38602,
+        "prediction_count": 7
+      },
+      {
+        "doc_id": "u02",
+        "filename": "u02_update_orion_mobile_app.txt",
+        "processing_seconds": 0.305519,
+        "prediction_count": 5
+      },
+      {
+        "doc_id": "u03",
+        "filename": "u03_update_orchid_data_migration.txt",
+        "processing_seconds": 0.317092,
+        "prediction_count": 6
+      },
+      {
+        "doc_id": "u04",
+        "filename": "u04_update_q3_cloud_costs.txt",
+        "processing_seconds": 0.295998,
+        "prediction_count": 4
+      },
+      {
+        "doc_id": "u05",
+        "filename": "u05_update_build_day_hackathon.txt",
+        "processing_seconds": 0.31097,
+        "prediction_count": 4
+      },
+      {
+        "doc_id": "x01",
+        "filename": "x01_email_it_helpdesk_laptop.txt",
+        "processing_seconds": 0.559464,
+        "prediction_count": 7
+      },
+      {
+        "doc_id": "x02",
+        "filename": "x02_incident_report_phishing.txt",
+        "processing_seconds": 0.6665,
+        "prediction_count": 7
+      }
+    ],
+    "total_document_processing_seconds": 13.4858,
+    "model_load_seconds": 2.957,
+    "peak_process_memory_mb": 481.44,
+    "memory_note": "Approximate peak resident memory (RSS) for this Python process, sampled every 0.1 seconds. It includes model loading and document processing.",
+    "timing_note": "Per-document time includes BERT and regex extraction, but excludes model loading."
+  }
+}
