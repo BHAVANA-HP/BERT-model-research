@@ -1,4 +1,3 @@
-query
 query_id,question,expected_doc_ids
 q01,Who is the project manager for Atlas?,m01; u01
 q02,How many days of annual leave do employees get?,p01

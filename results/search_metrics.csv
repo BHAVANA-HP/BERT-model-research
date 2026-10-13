@@ -1,0 +1,13 @@
+query_id,question,expected_doc_ids,expected_count,found_in_top3,recall_at_3,reciprocal_rank
+q01,Who is the project manager for Atlas?,m01; u01,2,2,1.0,1.0
+q02,How many days of annual leave do employees get?,p01,1,1,1.0,1.0
+q03,What should I do if I receive a suspicious email?,p03; x02,2,2,1.0,1.0
+q04,Which candidate has Java experience?,m04,1,1,1.0,1.0
+q05,Do I need approval to spend more than ten thousand rupees?,p04,1,1,1.0,1.0
+q06,Where is the leadership offsite and who is attending?,m06,1,1,1.0,1.0
+q07,Which client needs its data to stay inside India?,m03,1,1,1.0,1.0
+q08,Who has machine learning experience and is looking for a data scientist role?,cv01,1,1,1.0,1.0
+q09,Which project is migrating records to PostgreSQL?,u03,1,1,1.0,1.0
+q10,Why did cloud costs go up this quarter?,u04,1,1,1.0,1.0
+q11,How many days a week can I work from home?,p02,1,1,1.0,1.0
+q12,What went well in the first sprint?,m05,1,1,1.0,1.0
