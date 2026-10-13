@@ -22,8 +22,6 @@ This document records the experiments performed, observations made, implementati
 
 **Interpretation:** The model uses context to assign scores to candidate tokens. This score is not a measure of overall model accuracy.
 
-**Next step:** Test additional sentences and examine how changing the surrounding context affects predictions.
-
 ### Experiment 2: Named Entity Recognition
 
 - **Model:** `dslim/bert-base-NER`
@@ -46,8 +44,6 @@ This document records the experiments performed, observations made, implementati
 
 **Interpretation:** The model's output should be interpreted within its training task. It does not provide a dedicated neutral class, so neutral or mixed business messages may be misclassified.
 
-**Next step:** Test positive, negative, neutral, and mixed statements and document cases where the predictions appear unsuitable.
-
 ### Experiment 4: Semantic Search
 
 - **Model:** `sentence-transformers/all-MiniLM-L6-v2`
@@ -57,19 +53,6 @@ This document records the experiments performed, observations made, implementati
 **Observation:** The model converts text into 384-dimensional embeddings, which can be compared to rank documents by semantic similarity.
 
 **Interpretation:** Semantic search can retrieve documents based on meaning rather than exact keyword matches. However, a high similarity score does not guarantee that a document contains the correct answer.
-
-**Next step:** Evaluate retrieval using the query and expected-document pairs in the evaluation dataset. Record Recall@3 and Mean Reciprocal Rank (MRR) only after running and verifying the evaluation.
-
-### Experiment 5: Document Clustering
-
-- **Approach:** Group document embeddings using a clustering algorithm.
-- **Objective:** Explore whether documents with similar content can be grouped automatically.
-
-**Observation:** Record the actual cluster assignments and inspect the documents in each group after running the experiment.
-
-**Interpretation:** Cluster IDs are arbitrary identifiers, not rankings or predefined categories. The usefulness of the clusters must be judged by examining their contents.
-
-**Next step:** Verify the clustering script and outputs, then assess whether the resulting groups are meaningful.
 
 ## 3. Evaluation and Benchmarking
 
@@ -98,12 +81,3 @@ Benchmark comparisons should account for differences in task complexity and inpu
 - NER evaluation requires manually annotated expected entities.
 - Retrieval metrics and benchmark results must be verified from actual runs.
 - No fine-tuning or production-scale testing has been performed.
-
-## 6. Next Steps
-
-1. Verify that all experiment scripts run successfully.
-2. Confirm that the evaluation dataset matches the search script's expected format.
-3. Run the evaluation and record the actual metrics.
-4. Run the benchmark and record the measured results.
-5. Inspect the clustering output, if that experiment is included.
-6. Use the verified evidence to write the technical report.
