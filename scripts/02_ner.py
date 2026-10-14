@@ -64,7 +64,7 @@ EMAIL_RE = re.compile(
 PHONE_RE = re.compile(
     r"(?<!\w)(?:\+\d{1,3}[\s.-]?)?"
     r"(?:\(?\d{2,5}\)?[\s.-]?)?"
-    r"\d{3,5}[\s.-]?\d{4}(?!\w)"
+    r"\d{3,5}[\s.-]?\d{4,5}(?!\w)"
 )
 
 
@@ -467,6 +467,74 @@ def run_self_tests():
             f"phone recall: {original_phone_metrics['recall']} -> "
             f"{changed_phone_metrics['recall']}. "
             "The unchanged prediction is now a false positive."
+        ),
+    )
+
+    # --------------------------------------------------------
+    # TEST 4: Phone pattern extracts every real document format,
+    # including numbers followed by a full stop.
+    # Must fail with the legacy pattern and pass with the new one.
+    # --------------------------------------------------------
+
+    legacy_phone_re = re.compile(
+        r"(?<!\w)(?:\+\d{1,3}[\s.-]?)?"
+        r"(?:\(?\d{2,5}\)?[\s.-]?)?"
+        r"\d{3,5}[\s.-]?\d{4}(?!\w)"
+    )
+
+    real_phone_cases = [
+        (
+            "Questions go to arjun.mehta@luminasystems.example or call +91 98450 11223.",
+            "+91 98450 11223",
+            "Indian mobile (5+5) followed by a full stop (m01)",
+        ),
+        (
+            "Phone: +91 98765 43210",
+            "+91 98765 43210",
+            "Indian mobile (5+5) standard format (cv01)",
+        ),
+        (
+            "Contact: Thomas Becker, thomas.becker@meridianbank.example, +91 22 5550 7788.",
+            "+91 22 5550 7788",
+            "Indian landline (2-digit STD + 4+4) with trailing full stop (m03)",
+        ),
+        (
+            "Questions: hr@luminasystems.example or +91 80 4000 1200.",
+            "+91 80 4000 1200",
+            "Indian landline (Bangalore 80 + 4+4) with trailing full stop (p01)",
+        ),
+        (
+            "Booking contact: bookings@palmcove-resort.example, +91 832 555 0147.",
+            "+91 832 555 0147",
+            "Indian landline (3-digit STD + 3+4) with trailing full stop (m06)",
+        ),
+        (
+            "Guest speaker: Laura Bennett, San Francisco. Email laura.bennett@speakers.example, phone +1 415 555 0132.",
+            "+1 415 555 0132",
+            "US format (+1 3+3+4) with trailing full stop (m06)",
+        ),
+    ]
+
+    current_matches = [
+        [m.group() for m in PHONE_RE.finditer(text)]
+        for text, _, _ in real_phone_cases
+    ]
+    expected_matches = [[expected] for _, expected, _ in real_phone_cases]
+    current_passed = current_matches == expected_matches
+
+    legacy_matches = [
+        [m.group() for m in legacy_phone_re.finditer(text)]
+        for text, _, _ in real_phone_cases
+    ]
+    legacy_failed = legacy_matches != expected_matches
+
+    check(
+        "Phone regex extracts all document formats (including trailing full stop)",
+        current_passed and legacy_failed,
+        (
+            f"Extracted {len([m for m in current_matches if m])}/{len(real_phone_cases)} "
+            "formats correctly with new pattern. Legacy pattern fails on 5+5 numbers "
+            f"(extracted only {len([m for m in legacy_matches if m])}/{len(real_phone_cases)})."
         ),
     )
 

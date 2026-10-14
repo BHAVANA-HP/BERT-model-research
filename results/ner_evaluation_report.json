@@ -8,8 +8,7 @@
     "emails": "Case-insensitive exact match after whitespace normalization.",
     "phones": "Exact match after removing non-digit characters.",
     "partial_names": "Not counted as a match: 'Priya' does not match 'Priya Raman'.",
-    "deduplication": "Each normalized entity is counted once per document and entity type.",
-    "reason": "Exact normalized matching is consistent and reproducible. Partial names could incorrectly count an incomplete extraction as correct."
+    "deduplication": "Each normalized entity is counted once per document and entity type."
   },
   "metrics_by_type": {
     "persons": {
@@ -45,12 +44,12 @@
       "recall": 1.0
     },
     "phones": {
-      "correct": 8,
-      "predicted": 8,
-      "found": 8,
+      "correct": 15,
+      "predicted": 15,
+      "found": 15,
       "expected": 15,
       "precision": 1.0,
-      "recall": 0.5333
+      "recall": 1.0
     }
   },
   "predictions": [
@@ -202,6 +201,13 @@
       "source": "regex"
     },
     {
+      "doc_id": "cv01",
+      "filename": "cv01_aditi_sharma.txt",
+      "entity_type": "phones",
+      "entity": "+91 98765 43210",
+      "source": "regex"
+    },
+    {
       "doc_id": "m01",
       "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
       "entity_type": "organisations",
@@ -342,6 +348,13 @@
       "source": "regex"
     },
     {
+      "doc_id": "m01",
+      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
+      "entity_type": "phones",
+      "entity": "+91 98450 11223",
+      "source": "regex"
+    },
+    {
       "doc_id": "m02",
       "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
       "entity_type": "organisations",
@@ -451,6 +464,13 @@
       "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
       "entity_type": "emails",
       "entity": "meera.iyer@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m02",
+      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
+      "entity_type": "phones",
+      "entity": "+91 91234 56780",
       "source": "regex"
     },
     {
@@ -626,6 +646,13 @@
       "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
       "entity_type": "emails",
       "entity": "rohan.shetty@mailbox.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "m04",
+      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
+      "entity_type": "phones",
+      "entity": "+91 99001 77889",
       "source": "regex"
     },
     {
@@ -958,6 +985,13 @@
       "source": "regex"
     },
     {
+      "doc_id": "u02",
+      "filename": "u02_update_orion_mobile_app.txt",
+      "entity_type": "phones",
+      "entity": "+91 98480 33210",
+      "source": "regex"
+    },
+    {
       "doc_id": "u03",
       "filename": "u03_update_orchid_data_migration.txt",
       "entity_type": "organisations",
@@ -997,6 +1031,13 @@
       "filename": "u03_update_orchid_data_migration.txt",
       "entity_type": "emails",
       "entity": "pooja.nambiar@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "u03",
+      "filename": "u03_update_orchid_data_migration.txt",
+      "entity_type": "phones",
+      "entity": "+91 98400 55671",
       "source": "regex"
     },
     {
@@ -1053,6 +1094,13 @@
       "filename": "u05_update_build_day_hackathon.txt",
       "entity_type": "emails",
       "entity": "fatima.khan@luminasystems.example",
+      "source": "regex"
+    },
+    {
+      "doc_id": "u05",
+      "filename": "u05_update_build_day_hackathon.txt",
+      "entity_type": "phones",
+      "entity": "+91 90080 44556",
       "source": "regex"
     },
     {
@@ -1184,48 +1232,6 @@
       "filename": "u02_update_orion_mobile_app.txt",
       "entity_type": "locations",
       "entity": "Hyderabad"
-    },
-    {
-      "doc_id": "cv01",
-      "filename": "cv01_aditi_sharma.txt",
-      "entity_type": "phones",
-      "entity": "+91 98765 43210"
-    },
-    {
-      "doc_id": "m01",
-      "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
-      "entity_type": "phones",
-      "entity": "+91 98450 11223"
-    },
-    {
-      "doc_id": "m02",
-      "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
-      "entity_type": "phones",
-      "entity": "+91 91234 56780"
-    },
-    {
-      "doc_id": "m04",
-      "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
-      "entity_type": "phones",
-      "entity": "+91 99001 77889"
-    },
-    {
-      "doc_id": "u02",
-      "filename": "u02_update_orion_mobile_app.txt",
-      "entity_type": "phones",
-      "entity": "+91 98480 33210"
-    },
-    {
-      "doc_id": "u03",
-      "filename": "u03_update_orchid_data_migration.txt",
-      "entity_type": "phones",
-      "entity": "+91 98400 55671"
-    },
-    {
-      "doc_id": "u05",
-      "filename": "u05_update_build_day_hackathon.txt",
-      "entity_type": "phones",
-      "entity": "+91 90080 44556"
     }
   ],
   "false_positives": [
@@ -1589,116 +1595,116 @@
       {
         "doc_id": "cv01",
         "filename": "cv01_aditi_sharma.txt",
-        "processing_seconds": 6.084739,
-        "prediction_count": 21
+        "processing_seconds": 1.102959,
+        "prediction_count": 22
       },
       {
         "doc_id": "m01",
         "filename": "m01_meeting_2026-09-02_atlas_kickoff.txt",
-        "processing_seconds": 0.614511,
-        "prediction_count": 20
+        "processing_seconds": 0.586121,
+        "prediction_count": 21
       },
       {
         "doc_id": "m02",
         "filename": "m02_meeting_2026-09-09_sprint3_planning.txt",
-        "processing_seconds": 0.444815,
-        "prediction_count": 16
+        "processing_seconds": 0.470134,
+        "prediction_count": 17
       },
       {
         "doc_id": "m03",
         "filename": "m03_meeting_2026-09-14_meridian_bank_call.txt",
-        "processing_seconds": 0.413223,
+        "processing_seconds": 0.478468,
         "prediction_count": 15
       },
       {
         "doc_id": "m04",
         "filename": "m04_meeting_2026-09-16_hiring_sync.txt",
-        "processing_seconds": 0.363164,
-        "prediction_count": 10
+        "processing_seconds": 0.434301,
+        "prediction_count": 11
       },
       {
         "doc_id": "m05",
         "filename": "m05_meeting_2026-09-08_sprint1_retro.txt",
-        "processing_seconds": 0.376999,
+        "processing_seconds": 0.405236,
         "prediction_count": 5
       },
       {
         "doc_id": "m06",
         "filename": "m06_meeting_2026-09-18_leadership_offsite.txt",
-        "processing_seconds": 0.39325,
+        "processing_seconds": 0.474634,
         "prediction_count": 16
       },
       {
         "doc_id": "p01",
         "filename": "p01_policy_leave.txt",
-        "processing_seconds": 0.418903,
+        "processing_seconds": 0.492218,
         "prediction_count": 3
       },
       {
         "doc_id": "p02",
         "filename": "p02_policy_remote_work.txt",
-        "processing_seconds": 0.391276,
+        "processing_seconds": 0.487576,
         "prediction_count": 3
       },
       {
         "doc_id": "p03",
         "filename": "p03_policy_data_security.txt",
-        "processing_seconds": 0.676565,
+        "processing_seconds": 0.599556,
         "prediction_count": 4
       },
       {
         "doc_id": "p04",
         "filename": "p04_policy_expenses.txt",
-        "processing_seconds": 0.466832,
+        "processing_seconds": 0.459232,
         "prediction_count": 4
       },
       {
         "doc_id": "u01",
         "filename": "u01_update_atlas_week4.txt",
-        "processing_seconds": 0.38602,
+        "processing_seconds": 0.410586,
         "prediction_count": 7
       },
       {
         "doc_id": "u02",
         "filename": "u02_update_orion_mobile_app.txt",
-        "processing_seconds": 0.305519,
-        "prediction_count": 5
+        "processing_seconds": 0.390971,
+        "prediction_count": 6
       },
       {
         "doc_id": "u03",
         "filename": "u03_update_orchid_data_migration.txt",
-        "processing_seconds": 0.317092,
-        "prediction_count": 6
+        "processing_seconds": 0.460761,
+        "prediction_count": 7
       },
       {
         "doc_id": "u04",
         "filename": "u04_update_q3_cloud_costs.txt",
-        "processing_seconds": 0.295998,
+        "processing_seconds": 0.402987,
         "prediction_count": 4
       },
       {
         "doc_id": "u05",
         "filename": "u05_update_build_day_hackathon.txt",
-        "processing_seconds": 0.31097,
-        "prediction_count": 4
+        "processing_seconds": 0.383085,
+        "prediction_count": 5
       },
       {
         "doc_id": "x01",
         "filename": "x01_email_it_helpdesk_laptop.txt",
-        "processing_seconds": 0.559464,
+        "processing_seconds": 0.541036,
         "prediction_count": 7
       },
       {
         "doc_id": "x02",
         "filename": "x02_incident_report_phishing.txt",
-        "processing_seconds": 0.6665,
+        "processing_seconds": 0.524537,
         "prediction_count": 7
       }
     ],
-    "total_document_processing_seconds": 13.4858,
-    "model_load_seconds": 2.957,
-    "peak_process_memory_mb": 481.44,
-    "memory_note": "Approximate peak resident memory (RSS) for this Python process, sampled every 0.1 seconds. It includes model loading and document processing.",
+    "total_document_processing_seconds": 9.1044,
+    "model_load_seconds": 3.7242,
+    "peak_process_memory_mb": 811.56,
+    "memory_note": "Approximate peak resident memory (RSS) for this Python process, sampled every 0.1 seconds.",
     "timing_note": "Per-document time includes BERT and regex extraction, but excludes model loading."
   }
 }
