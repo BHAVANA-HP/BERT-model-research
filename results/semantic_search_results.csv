@@ -1,37 +1,37 @@
 query_id,question,expected_doc_ids,rank,document_id,document,similarity,search_seconds
-q01,Who is the project manager for Atlas?,m01; u01,1,m01,m01_meeting_2026-09-02_atlas_kickoff,0.4359,0.03196
-q01,Who is the project manager for Atlas?,m01; u01,2,m05,m05_meeting_2026-09-08_sprint1_retro,0.3843,0.03196
-q01,Who is the project manager for Atlas?,m01; u01,3,u01,u01_update_atlas_week4,0.3835,0.03196
-q02,How many days of annual leave do employees get?,p01,1,p01,p01_policy_leave,0.5699,0.02128
-q02,How many days of annual leave do employees get?,p01,2,p02,p02_policy_remote_work,0.3251,0.02128
-q02,How many days of annual leave do employees get?,p01,3,p04,p04_policy_expenses,0.2694,0.02128
-q03,What should I do if I receive a suspicious email?,p03; x02,1,x02,x02_incident_report_phishing,0.4962,0.02156
-q03,What should I do if I receive a suspicious email?,p03; x02,2,p03,p03_policy_data_security,0.3189,0.02156
-q03,What should I do if I receive a suspicious email?,p03; x02,3,m03,m03_meeting_2026-09-14_meridian_bank_call,0.1457,0.02156
-q04,Which candidate has Java experience?,m04,1,m04,m04_meeting_2026-09-16_hiring_sync,0.5348,0.01761
-q04,Which candidate has Java experience?,m04,2,cv01,cv01_aditi_sharma,0.2718,0.01761
-q04,Which candidate has Java experience?,m04,3,m03,m03_meeting_2026-09-14_meridian_bank_call,0.1941,0.01761
-q05,Do I need approval to spend more than ten thousand rupees?,p04,1,p04,p04_policy_expenses,0.4209,0.01826
-q05,Do I need approval to spend more than ten thousand rupees?,p04,2,m03,m03_meeting_2026-09-14_meridian_bank_call,0.2355,0.01826
-q05,Do I need approval to spend more than ten thousand rupees?,p04,3,u04,u04_update_q3_cloud_costs,0.1727,0.01826
-q06,Where is the leadership offsite and who is attending?,m06,1,m06,m06_meeting_2026-09-18_leadership_offsite,0.3546,0.01703
-q06,Where is the leadership offsite and who is attending?,m06,2,m04,m04_meeting_2026-09-16_hiring_sync,0.2763,0.01703
-q06,Where is the leadership offsite and who is attending?,m06,3,m02,m02_meeting_2026-09-09_sprint3_planning,0.2446,0.01703
-q07,Which client needs its data to stay inside India?,m03,1,m03,m03_meeting_2026-09-14_meridian_bank_call,0.4582,0.01876
-q07,Which client needs its data to stay inside India?,m03,2,cv01,cv01_aditi_sharma,0.3593,0.01876
-q07,Which client needs its data to stay inside India?,m03,3,p03,p03_policy_data_security,0.312,0.01876
-q08,Who has machine learning experience and is looking for a data scientist role?,cv01,1,cv01,cv01_aditi_sharma,0.3606,0.01819
-q08,Who has machine learning experience and is looking for a data scientist role?,cv01,2,m04,m04_meeting_2026-09-16_hiring_sync,0.3087,0.01819
-q08,Who has machine learning experience and is looking for a data scientist role?,cv01,3,u01,u01_update_atlas_week4,0.2057,0.01819
-q09,Which project is migrating records to PostgreSQL?,u03,1,u03,u03_update_orchid_data_migration,0.5359,0.02196
-q09,Which project is migrating records to PostgreSQL?,u03,2,m01,m01_meeting_2026-09-02_atlas_kickoff,0.3189,0.02196
-q09,Which project is migrating records to PostgreSQL?,u03,3,m05,m05_meeting_2026-09-08_sprint1_retro,0.2306,0.02196
-q10,Why did cloud costs go up this quarter?,u04,1,u04,u04_update_q3_cloud_costs,0.641,0.01858
-q10,Why did cloud costs go up this quarter?,u04,2,m05,m05_meeting_2026-09-08_sprint1_retro,0.2028,0.01858
-q10,Why did cloud costs go up this quarter?,u04,3,m01,m01_meeting_2026-09-02_atlas_kickoff,0.1856,0.01858
-q11,How many days a week can I work from home?,p02,1,p02,p02_policy_remote_work,0.4169,0.01343
-q11,How many days a week can I work from home?,p02,2,p01,p01_policy_leave,0.3221,0.01343
-q11,How many days a week can I work from home?,p02,3,u05,u05_update_build_day_hackathon,0.1365,0.01343
-q12,What went well in the first sprint?,m05,1,m05,m05_meeting_2026-09-08_sprint1_retro,0.5896,0.01899
-q12,What went well in the first sprint?,m05,2,m02,m02_meeting_2026-09-09_sprint3_planning,0.3771,0.01899
-q12,What went well in the first sprint?,m05,3,m01,m01_meeting_2026-09-02_atlas_kickoff,0.2776,0.01899
+q01,Who is the project manager for Atlas?,m01; u01,1,m01,m01_meeting_2026-09-02_atlas_kickoff,0.4359,0.04912
+q01,Who is the project manager for Atlas?,m01; u01,2,m05,m05_meeting_2026-09-08_sprint1_retro,0.3843,0.04912
+q01,Who is the project manager for Atlas?,m01; u01,3,u01,u01_update_atlas_week4,0.3835,0.04912
+q02,How many days of annual leave do employees get?,p01,1,p01,p01_policy_leave,0.5699,0.0275
+q02,How many days of annual leave do employees get?,p01,2,p02,p02_policy_remote_work,0.3251,0.0275
+q02,How many days of annual leave do employees get?,p01,3,p04,p04_policy_expenses,0.2694,0.0275
+q03,What should I do if I receive a suspicious email?,p03; x02,1,x02,x02_incident_report_phishing,0.4962,0.03327
+q03,What should I do if I receive a suspicious email?,p03; x02,2,p03,p03_policy_data_security,0.3189,0.03327
+q03,What should I do if I receive a suspicious email?,p03; x02,3,m03,m03_meeting_2026-09-14_meridian_bank_call,0.1457,0.03327
+q04,Which candidate has Java experience?,m04,1,m04,m04_meeting_2026-09-16_hiring_sync,0.5348,0.02264
+q04,Which candidate has Java experience?,m04,2,cv01,cv01_aditi_sharma,0.2718,0.02264
+q04,Which candidate has Java experience?,m04,3,m03,m03_meeting_2026-09-14_meridian_bank_call,0.1941,0.02264
+q05,Do I need approval to spend more than ten thousand rupees?,p04,1,p04,p04_policy_expenses,0.4209,0.03399
+q05,Do I need approval to spend more than ten thousand rupees?,p04,2,m03,m03_meeting_2026-09-14_meridian_bank_call,0.2355,0.03399
+q05,Do I need approval to spend more than ten thousand rupees?,p04,3,u04,u04_update_q3_cloud_costs,0.1727,0.03399
+q06,Where is the leadership offsite and who is attending?,m06,1,m06,m06_meeting_2026-09-18_leadership_offsite,0.3546,0.03163
+q06,Where is the leadership offsite and who is attending?,m06,2,m04,m04_meeting_2026-09-16_hiring_sync,0.2763,0.03163
+q06,Where is the leadership offsite and who is attending?,m06,3,m02,m02_meeting_2026-09-09_sprint3_planning,0.2446,0.03163
+q07,Which client needs its data to stay inside India?,m03,1,m03,m03_meeting_2026-09-14_meridian_bank_call,0.4582,0.03217
+q07,Which client needs its data to stay inside India?,m03,2,cv01,cv01_aditi_sharma,0.3593,0.03217
+q07,Which client needs its data to stay inside India?,m03,3,p03,p03_policy_data_security,0.312,0.03217
+q08,Who has machine learning experience and is looking for a data scientist role?,cv01,1,cv01,cv01_aditi_sharma,0.3606,0.02896
+q08,Who has machine learning experience and is looking for a data scientist role?,cv01,2,m04,m04_meeting_2026-09-16_hiring_sync,0.3087,0.02896
+q08,Who has machine learning experience and is looking for a data scientist role?,cv01,3,u01,u01_update_atlas_week4,0.2057,0.02896
+q09,Which project is migrating records to PostgreSQL?,u03,1,u03,u03_update_orchid_data_migration,0.5359,0.02941
+q09,Which project is migrating records to PostgreSQL?,u03,2,m01,m01_meeting_2026-09-02_atlas_kickoff,0.3189,0.02941
+q09,Which project is migrating records to PostgreSQL?,u03,3,m05,m05_meeting_2026-09-08_sprint1_retro,0.2306,0.02941
+q10,Why did cloud costs go up this quarter?,u04,1,u04,u04_update_q3_cloud_costs,0.641,0.0308
+q10,Why did cloud costs go up this quarter?,u04,2,m05,m05_meeting_2026-09-08_sprint1_retro,0.2028,0.0308
+q10,Why did cloud costs go up this quarter?,u04,3,m01,m01_meeting_2026-09-02_atlas_kickoff,0.1856,0.0308
+q11,How many days a week can I work from home?,p02,1,p02,p02_policy_remote_work,0.4169,0.02937
+q11,How many days a week can I work from home?,p02,2,p01,p01_policy_leave,0.3221,0.02937
+q11,How many days a week can I work from home?,p02,3,u05,u05_update_build_day_hackathon,0.1365,0.02937
+q12,What went well in the first sprint?,m05,1,m05,m05_meeting_2026-09-08_sprint1_retro,0.5896,0.02804
+q12,What went well in the first sprint?,m05,2,m02,m02_meeting_2026-09-09_sprint3_planning,0.3771,0.02804
+q12,What went well in the first sprint?,m05,3,m01,m01_meeting_2026-09-02_atlas_kickoff,0.2776,0.02804

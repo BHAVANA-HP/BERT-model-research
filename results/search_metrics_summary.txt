@@ -2,8 +2,8 @@ Documents searched: 18
 Queries evaluated: 12
 Top K: 3
 Model: sentence-transformers/all-MiniLM-L6-v2
-Model load time: 6.721 seconds
-Document embedding time: 1.792 seconds
-Average query search time: 0.01980 seconds
+Model load time: 8.548 seconds
+Document embedding time: 2.537 seconds
+Average query search time: 0.03141 seconds
 Recall@3: 1.0000
 MRR: 1.0000

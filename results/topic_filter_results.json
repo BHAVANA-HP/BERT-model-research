@@ -6,9 +6,9 @@
     "not_health": "a page not about health"
   },
   "timing": {
-    "model_load_seconds": 5.2692,
-    "total_inference_seconds": 1.4518,
-    "avg_time_per_page_seconds": 0.07259,
+    "model_load_seconds": 8.62,
+    "total_inference_seconds": 2.3304,
+    "avg_time_per_page_seconds": 0.11652,
     "total_pages": 20
   },
   "baseline_decision_rule": "health if sim_health > sim_not_health (margin > 0.00)",

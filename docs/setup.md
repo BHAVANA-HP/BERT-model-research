@@ -1,59 +1,113 @@
-# Setup and Usage
+﻿# Setup and Usage Guide
+
+This guide walks through reproducing all experimental results from a fresh clone of the repository.
+
+---
 
 ## 1. Prerequisites
 
-- Python 3.12 recommended
-- Git
-- Internet connection for downloading pretrained models
+- **Python:** Python 3.12 (Python 3.10+ supported).
+- **Git:** Installed and available on your system path.
+- **Hardware:** Standard CPU laptop (GPU is not required; all models run on CPU).
+- **Internet:** Required during initial setup to download pretrained Hugging Face models.
 
-Experiments can run on a CPU; a GPU is not required.
+---
 
-## 2. Clone the Repository
+## 2. Step 1: Clone the Repository
+
+Clone the repository and navigate into the project root directory:
 
 ```powershell
 git clone https://github.com/BHAVANA-HP/BERT-model-research.git
 cd BERT-model-research
 ```
 
-## 3. Create a Virtual Environment
+---
 
+## 3. Step 2: Create and Activate Virtual Environment
+
+Create an isolated virtual environment and activate it:
+
+**On Windows (PowerShell):**
 ```powershell
-py -3.12 -m venv .venv
+python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-## 4. Install Dependencies
+*(If script execution is disabled in PowerShell, run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` first).*
+
+**On Linux / macOS:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+---
+
+## 4. Step 3: Install Required Dependencies
+
+Upgrade `pip` and install the pinned dependencies:
 
 ```powershell
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## 5. Run the Experiments
+Verify your installed packages and CPU PyTorch build:
+```powershell
+python scripts/record_versions.py
+```
+This generates `results/versions.txt` and confirms package integrity.
 
-Run each script from the repository root:
+---
+
+## 5. Step 4: Run the Complete Automated Pipeline
+
+Run the entire research pipeline with a single command:
 
 ```powershell
-python scripts/01_fill_mask.py
-python scripts/02_ner.py
-python scripts/03_sentiment.py
-python scripts/04_semantic_search.py
+python scripts/run_all.py
 ```
 
-Add the sentence-similarity command here once its script filename is confirmed.
+`scripts/run_all.py` executes the four core research stages sequentially and halts immediately on the first failure:
+1. **Stage 1 (Self-Tests):** Validates scoring logic, edge cases, and phone regex patterns (`scripts/02_ner.py --self-test`).
+2. **Stage 2 (Semantic Search):** Encodes 18 documents, queries 12 questions, and evaluates Recall@3 and MRR (`scripts/04_semantic_search.py`).
+3. **Stage 3 (NER Scoring):** Runs `dslim/bert-base-NER` and regex extraction across all 18 documents, scoring predictions against ground truth (`scripts/02_ner.py`).
+4. **Stage 4 (Topic Filter):** Evaluates zero-shot health topic filtering across 20 web pages with margin threshold analysis (`scripts/05_topic_filter.py`).
 
-The first run may download pretrained models from Hugging Face. Execution time depends on the model, hardware, and network speed.
+---
 
-## 6. Data and Results
+## 6. Step 5: (Optional) Run Individual Experiments
 
-- `data/` contains the fictional text documents used in experiments.
-- `scripts/` contains the experiment implementations.
-- `results/` contains generated outputs, where configured.
+You can also run any experiment individually:
 
-Check each script for its input paths and output behavior.
+- **Masked Language Modeling:**
+  ```powershell
+  python scripts/01_fill_mask.py
+  ```
+  *Output:* `results/fill_mask_results.txt`
 
-## 7. Notes
+- **Sentiment Classification:**
+  ```powershell
+  python scripts/03_sentiment.py
+  ```
+  *Output:* `results/sentiment_results.txt`
 
-- The experiments use pretrained models for inference; model fine-tuning is not performed.
-- CPU execution may be slower than GPU execution.
-- Model predictions and similarity scores should not be interpreted as proof of correctness.
+- **Sentence Similarity:**
+  ```powershell
+  python scripts/sentence_similarity.py
+  ```
+  *Output:* `results/sentence_similarity_results.txt`
+
+---
+
+## 7. Step 6: Verify Generated Results
+
+All outputs are saved to the `results/` directory:
+
+| Experiment / Benchmark | Primary Output Files |
+|---|---|
+| **Semantic Search** | `results/search_metrics_summary.txt`<br>`results/search_metrics.csv`<br>`results/semantic_search_results.csv` |
+| **Named Entity Recognition** | `results/ner_evaluation_report.json` |
+| **Topic Filter** | `results/topic_filter_summary.txt`<br>`results/topic_filter_results.json`<br>`results/topic_filter_predictions.csv` |
+| **Environment Check** | `results/environment.txt`<br>`results/dependency-check.txt`<br>`results/versions.txt` |

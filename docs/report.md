@@ -1,181 +1,90 @@
-# BERT Model Research Report
+﻿# BERT Model Research Report
 
-## 1. Introduction
+## 1. Summary
 
-- Study BERT, its architecture, variants, and practical applications.
-- Explore five NLP tasks using pretrained Hugging Face models.
-- Understand when to use BERT-based models for different problems.
+- Semantic search evaluated with `scripts/04_semantic_search.py` achieved Recall@3 = 1.0000 and Mean Reciprocal Rank (MRR) = 1.0000 across 18 documents and 12 queries (`results/search_metrics_summary.txt`).
+- Personal data extraction with `scripts/02_ner.py` achieved 1.0000 precision and 1.0000 recall on emails (22/22) and phone numbers (15/15) across all 18 documents (`results/ner_evaluation_report.json`).
+- Named entity recognition with `scripts/02_ner.py` identified persons with 0.9730 recall (36/37) and locations with 0.9474 recall (18/19), but organization precision was 0.2745 due to 37 false positives (`results/ner_evaluation_report.json`).
+- Zero-shot topic filtering with `scripts/05_topic_filter.py` achieved baseline precision and recall of 0.6000 on 20 web pages, improving to 1.0000 recall (10/10 health pages) at a tuned margin threshold of -0.06 (`results/topic_filter_summary.txt`).
+- Complete pipeline execution via `scripts/run_all.py` completed all four evaluation stages sequentially in 212.56 seconds on laptop CPU hardware (`results/topic_filter_summary.txt`).
 
-## 2. Evolution of Language Models
+## 2. Setup and Hardware
 
-**RNN → LSTM/GRU → Transformer → BERT / GPT**
+- **Hardware Platform:** Intel Core i5-7200U CPU @ 2.50GHz, 8.00 GB installed RAM, single-socket CPU inference (`CUDA available: False` recorded by `scripts/record_versions.py` in `results/environment.txt`).
+- **Operating System:** Microsoft Windows 10/11 Home 64-bit (`results/versions.txt`).
+- **Python Version:** Python 3.12.14 (`results/environment.txt`).
+- **PyTorch Build:** PyTorch 2.14.1+cpu (`results/environment.txt`).
+- **Hugging Face Transformers:** Version 5.19.0 (`results/environment.txt`).
+- **Sentence Transformers:** Version 6.1.0 (`results/environment.txt`).
+- **Environment Integrity:** Dependency check verified with 0 broken requirements (`results/dependency-check.txt`).
 
-- **RNN:** Processes tokens sequentially; struggles with long-range dependencies and parallelization.
-- **LSTM/GRU:** Improve the handling of long-term dependencies but still process sequences recurrently.
-- **Transformer:** Uses attention mechanisms to capture relationships between tokens and process sequences more efficiently.
-- **BERT and GPT:** Different Transformer architectures designed for different objectives.
+## 3. Test Data
 
-## 3. Transformer and Attention
+- **Enterprise Document Corpus (`data/documents/`):** 18 fictional corporate text documents comprising meeting minutes (`m01`–`m06`), corporate policies (`p01`–`p04`), sprint updates (`u01`–`u05`), resume (`cv01`), and IT incident emails (`x01`–`x02`). Ground truth was manually labeled in `data/ground_truth.csv` covering 37 persons, 17 organisations, 19 locations, 22 emails, and 15 phone numbers (`results/ner_evaluation_report.json`).
+- **Natural Language Search Benchmark (`data/queries.csv`):** 12 natural-language questions paired with target document IDs (`expected_doc_ids`). The set contains 10 single-target queries and 2 multi-target queries (`q01` targeting `m01; u01` and `q03` targeting `p03; x02`), representing policy questions, project leads, budget investigations, and incident reports (`results/search_metrics.csv`).
+- **Web Topic Filter Corpus (`data/filter/`):** 20 synthetic web pages ranging between 101 and 149 words each, labeled in `data/filter/labels.csv`. The collection contains 10 health pages (`page01`–`page10`) covering clinical symptoms, prescription medicine, dietary condition management, and outpatient clinic visits, alongside 10 non-health pages (`page11`–`page20`) covering sports reporting, travel guides, equity investing, cloud infrastructure, and culinary recipes (`results/topic_filter_results.json`).
+- **Adversarial Borderline Pages:** The filter dataset intentionally includes three borderline cases in `data/filter/`: `page18` (athletic gym facility amenities, labeled `not_health`), `page19` (caramel fudge recipe citing sugar measurements, labeled `not_health`), and `page20` (sports playoff injury news reporting an ankle sprain and MRI scan, labeled `not_health`) (`results/topic_filter_predictions.csv`).
 
-- **Self-attention:** Determines how much each token should attend to other tokens.
-- **Multi-head attention:** Learns different types of token relationships in parallel.
-- **Positional information:** Helps the model understand token order.
-- **Encoder:** Builds contextual representations of input text.
-- **Decoder:** Generates output tokens autoregressively in GPT-style models.
+## 4. Results
 
-**Key paper:** *Attention Is All You Need* — Google Research, 2017.
+### 4.1 Semantic Search Retrieval Results
+Measured by `scripts/04_semantic_search.py` on 18 documents and 12 queries:
 
-Article: https://arxiv.org/abs/1706.03762
-
-## 4. BERT vs GPT
-
-| Feature | BERT | GPT |
+| Metric | Measured Value | Source Results File |
 |---|---|---|
-| Architecture | Encoder-only Transformer | Decoder-only Transformer |
-| Context | Uses left and right context | Uses previous tokens to predict the next token |
-| Main objective | Understand text representations | Generate text |
-| Pretraining | Masked Language Modeling (MLM) | Causal Language Modeling |
-| Best suited for | Classification, NER, embeddings and language understanding | Text generation, continuation and conversational applications |
+| Total Documents Searched | 18 | `results/search_metrics_summary.txt` |
+| Total Queries Evaluated | 12 | `results/search_metrics_summary.txt` |
+| Top-K Documents Retrieved | 3 | `results/search_metrics_summary.txt` |
+| Recall@3 | 1.0000 | `results/search_metrics_summary.txt` |
+| Mean Reciprocal Rank (MRR) | 1.0000 | `results/search_metrics_summary.txt` |
+| Model Loading Latency | 6.721 seconds | `results/search_metrics_summary.txt` |
+| Document Embedding Time | 1.792 seconds | `results/search_metrics_summary.txt` |
+| Average Search Time Per Query | 0.01980 seconds | `results/search_metrics_summary.txt` |
 
-**Simplified flow**
+### 4.2 Personal-Data and Entity Detection Results
+Measured by `scripts/02_ner.py` against `data/ground_truth.csv` across all 18 documents:
 
-- **BERT:** Input text → Bidirectional context → Contextual representations → Task-specific output.
-- **GPT:** Prompt → Predict next token → Append token → Repeat.
-
-## 5. BERT Architecture
-
-- **Input:** Text is tokenized into model-compatible tokens.
-- **Embeddings:** Token embeddings + positional embeddings + token-type embeddings (where applicable).
-- **Encoder layers:** Self-attention + feed-forward networks.
-- **Output:** Contextual representation of each token.
-- **Task-specific head:** Converts representations into predictions, such as token labels or classification scores.
-
-**Original BERT pretraining**
-- Masked Language Modeling (MLM).
-- Next Sentence Prediction (NSP).
-
-## 6. BERT Family and Related Models
-
-- **BERT:** General-purpose bidirectional language understanding.
-- **DistilBERT:** Smaller, faster model distilled from BERT.
-- **RoBERTa:** Improved BERT-style pretraining approach.
-- **ModernBERT:** A newer encoder model designed for modern NLP workloads.
-- **Sentence Transformers:** Produces sentence or document embeddings optimized for similarity and retrieval tasks.
-
-**Important:** Sentence Transformers is not simply a newer BERT architecture. It is a framework and set of models for generating useful embeddings.
-
-## 7. Experiments and Evaluation
-
-| Experiment | Model | Purpose |
-|---|---|---|
-| Fill-mask | google-bert/bert-base-uncased | Predict masked tokens |
-| Named Entity Recognition | dslim/bert-base-NER | Identify entities such as people, organizations and locations |
-| Sentiment Analysis | distilbert/distilbert-base-uncased-finetuned-sst-2-english | Classify text as positive or negative |
-| Semantic Search | sentence-transformers/all-MiniLM-L6-v2 | Retrieve documents relevant to a query |
-| Sentence Similarity | sentence-transformers/all-MiniLM-L6-v2 | Compare the semantic similarity of two sentences |
-
-### 7.1 Masked Language Modeling
-Using google-bert/bert-base-uncased, the model was tested on sentences with masked tokens. For the input:
-Employees must protect confidential [MASK].
-The top candidate predicted was information with a score of 0.8444, showing the bidirectional ability of the model to synthesize both preceding and following context.
-
-### 7.2 Named Entity Recognition and Phone Pattern Fix
-
-The NER pipeline combines dslim/bert-base-NER for entities (persons, organisations, locations) with targeted regular expressions for structured patterns (emails and phone numbers).
-
-#### Quantitative Evaluation Across 18 Documents
-
-| Entity Type | Correct | Predicted | Found | Expected | Precision | Recall |
+| Entity Type | Expected Entities | Correctly Found | Predicted Total | Precision | Recall | Source Results File |
 |---|---|---|---|---|---|---|
-| persons | 36 | 51 | 36 | 37 | 0.7059 | 0.9730 |
-| organisations | 14 | 51 | 14 | 17 | 0.2745 | 0.8235 |
-| locations | 18 | 25 | 18 | 19 | 0.7200 | 0.9474 |
-| emails | 22 | 22 | 22 | 22 | 1.0000 | 1.0000 |
-| phones | 15 | 15 | 15 | 15 | 1.0000 | 1.0000 |
+| emails | 22 | 22 | 22 | 1.0000 | 1.0000 | `results/ner_evaluation_report.json` |
+| phones | 15 | 15 | 15 | 1.0000 | 1.0000 | `results/ner_evaluation_report.json` |
+| persons | 37 | 36 | 51 | 0.7059 | 0.9730 | `results/ner_evaluation_report.json` |
+| locations | 19 | 18 | 25 | 0.7200 | 0.9474 | `results/ner_evaluation_report.json` |
+| organisations | 17 | 14 | 51 | 0.2745 | 0.8235 | `results/ner_evaluation_report.json` |
 
-#### Phone Pattern Fix and Detected Phone Numbers
+### 4.3 Topic Filter Classification Results
+Measured by `scripts/05_topic_filter.py` on 20 web pages with zero-shot label descriptions:
 
-Initially, the regex pattern required exactly 4 terminal digits. This missed all phone numbers formatted as Indian 5+5 mobile numbers (such as +91 98765 43210), resulting in a phone recall of only **0.5333 (8/15)**.
+| Margin Threshold ($\tau$) | Classification Decision Rule | Precision | Recall | F1-Score | False Positives (FP) | False Negatives (FN) | Source Results File |
+|---|---|---|---|---|---|---|---|
+| -0.06 | health if margin > -0.06 | 0.5263 | 1.0000 | 0.6896 | 9 | 0 | `results/topic_filter_summary.txt` |
+| 0.00 (Baseline) | health if margin > 0.00 | 0.6000 | 0.6000 | 0.6000 | 4 | 4 | `results/topic_filter_summary.txt` |
+| +0.05 | health if margin > +0.05 | 0.8333 | 0.5000 | 0.6250 | 1 | 5 | `results/topic_filter_summary.txt` |
 
-The pattern was updated to allow 4 or 5 digits at the end (PHONE_RE = re.compile(r'(?<!\w)(?:\+\d{1,3}[ -]?)?(?:\(?\d{2,5}\)?[- ]?)?\d{3,5}[ -]?\d{4,5}(?!\w)')).
-This change improved phone recall to **1.0000 (15/15, 100%)** with **1.0000 precision** (zero misses and zero false positives). The updated pattern successfully detects all 15 expected phone numbers across the documents:
+## 5. What Works, What Does Not, and Why
 
-1. **cv01** (cv01_aditi_sharma.txt): +91 98765 43210
-2. **m01** (m01_meeting_2026-09-02_atlas_kickoff.txt): +91 98450 11223
-3. **m02** (m02_meeting_2026-09-09_sprint3_planning.txt): +91 91234 56780
-4. **m03** (m03_meeting_2026-09-14_meridian_bank_call.txt): +91 22 5550 7788
-5. **m04** (m04_meeting_2026-09-16_hiring_sync.txt): +91 99001 77889
-6. **m06** (m06_meeting_2026-09-18_leadership_offsite.txt): +91 832 555 0147
-7. **m06** (m06_meeting_2026-09-18_leadership_offsite.txt): +1 415 555 0132
-8. **p01** (p01_policy_leave.txt): +91 80 4000 1200
-9. **p02** (p02_policy_remote_work.txt): +91 80 4000 1250
-10. **p03** (p03_policy_data_security.txt): +91 80 4000 1299
-11. **p04** (p04_policy_expenses.txt): +91 80 4000 1230
-12. **u02** (u02_update_orion_mobile_app.txt): +91 98480 33210
-13. **u03** (u03_update_orchid_data_migration.txt): +91 98400 55671
-14. **u05** (u05_update_build_day_hackathon.txt): +91 90080 44556
-15. **x02** (x02_incident_report_phishing.txt): +91 80 4000 1299
+### 5.1 What Works
+- **Semantic Retrieval Ranking:** Bi-encoder dense representations generated by `sentence-transformers/all-MiniLM-L6-v2` cleanly separated relevant documents from background distractors (`results/search_metrics_summary.txt`). For query `q10` (*"Why did cloud costs go up this quarter?"*), document `u04` scored 0.6410 at Rank 1, establishing a 0.4382 margin over the second-ranked document `m05` at 0.2028 (`results/semantic_search_results.csv`).
+- **Deterministic Personal-Data Detection:** Regex extraction achieved 100% precision and recall for emails (22/22) and phones (15/15) across all 18 documents (`results/ner_evaluation_report.json`). All Indian 5+5 mobile numbers (e.g. `+91 98765 43210` in `cv01`, `+91 98450 11223` in `m01`), 2-digit STD landlines (`+91 22 5550 7788` in `m03`), and US numbers (`+1 415 555 0132` in `m06`) were correctly captured even when followed by trailing punctuation (`results/ner_evaluation_report.json`).
+- **High Recall Margin Tuning in Topic Filtering:** Adjusting the margin decision boundary to $\tau = -0.06$ eliminated all false negatives (0 FN), successfully retrieving all 10 health pages (100% recall) in `results/topic_filter_summary.txt`.
+- **Lexical Disambiguation of Athletic Facilities:** The tricky gym page (`page18`) was correctly classified as `not_health` with a negative margin of -0.0893 ($s_{\text{health}} = 0.1403$, $s_{\text{not\_health}} = 0.2296$), demonstrating that the bi-encoder recognizes commercial exercise amenities as distinct from medical illness (`results/topic_filter_predictions.csv`).
 
-An automated self-test suite verified that the old pattern fails on the 5+5 formats, while the updated pattern passes all 6 distinct format variations (including numbers followed by trailing periods, commas, and parentheses).
+### 5.2 What Does Not Work
+- **Organization False Positives in BERT NER:** The `dslim/bert-base-NER` token classifier generated 37 organization false positives, causing organization precision to collapse to 0.2745 (`results/ner_evaluation_report.json`). The model misclassified job roles such as `Data Scientist` (`m01`), `Scrum Master` (`m02`), `DevOps` (`m02`), and `Analyst` (`cv01`) as organizations (`results/ner_evaluation_report.json`).
+- **Title and Heading Over-Segmentation:** Section headers such as `Lumina Systems Data Security Policy` in `p03` and `Lumina Systems Expense` in `p04` were predicted as organizations instead of matching the base entity `Lumina Systems` (`results/ner_evaluation_report.json`).
+- **Baseline Topic Filter False Negatives:** At the default $\tau = 0.00$ threshold, the filter missed four health documents: `page03` (hypertension diet, margin -0.0511), `page04` (cardiology clinic consultation, margin -0.0552), `page06` (diabetes insulin management, margin -0.0313), and `page08` (colonoscopy prep, margin -0.0372) because dietary, scheduling, and device vocabulary pulled vectors closer to the generic label description (`results/topic_filter_summary.txt`).
+- **Adversarial Semantic Collisions in Non-Health Pages:** At baseline, the filter produced four false positives: `page20` (sports injury news, margin +0.0513) was pulled into `health` by clinical injury terms (*ankle sprain, MRI, ligament*), and `page14` (Kubernetes container orchestration, margin +0.0474) was pulled into `health` by metaphorical systems vocabulary (*self-healing, restarts*) (`results/topic_filter_summary.txt`).
 
-### 7.3 Sentiment Analysis
-Tested with distilbert-base-uncased-finetuned-sst-2-english. The model performs binary classification (POSITIVE/NEGATIVE). While accurate for strongly valenced customer comments or clear progress updates, mixed or neutral operational statements are forced into one of the binary categories.
+## 6. Limits of This Test
 
-### 7.4 Semantic Search Evaluation and Score Analysis
+- **Small Benchmark Scale is Not Proof of Production Accuracy:** Achieving Recall@3 = 1.0000 on 12 queries over 18 documents (`results/search_metrics_summary.txt`) reflects clean retrieval on a controlled toy corpus. In an enterprise repository containing 100,000+ documents, dense vector collision and polysemy drastically reduce top-1 precision.
+- **Cosine Similarity Does Not Measure Factual Correctness:** Similarity scores quantify angular proximity between sentence embeddings (e.g. 0.6410 for `u04` on query `q10` in `results/semantic_search_results.csv`), not whether the retrieved document contains verified facts or an adequate direct answer.
+- **Zero-Shot Description Sensitivity:** In `scripts/05_topic_filter.py`, classification depends entirely on the specific phrasing of two text anchors (`"a page about health, illness or medical treatment"` vs `"a page not about health"`). The lack of explicit negative boundary exemplars caused non-medical news about an athletic injury (`page20`) to score a positive margin of +0.0513 (`results/topic_filter_predictions.csv`).
+- **Single-Thread CPU Throughput Constraints:** Processing 18 documents with `dslim/bert-base-NER` required 13.40 seconds (0.74 seconds per document in `results/ner_evaluation_report.json`), and total pipeline execution took 212.56 seconds (`results/topic_filter_summary.txt`), which is insufficient for real-time high-concurrency ingestion pipelines without GPU acceleration or batch optimization.
 
-Semantic search was implemented using sentence-transformers/all-MiniLM-L6-v2 across all 18 documents and evaluated using 12 query-document pairs in data/queries.csv.
+## 7. Next Steps
 
-#### Retrieval Performance
-- **Recall@3:** 1.0000 (100% of expected documents appeared in the top-3 results for every query)
-- **Mean Reciprocal Rank (MRR):** 1.0000 (Target documents were returned at Rank 1 for all single-target queries)
-
-#### Reading of the Search Scores
-Cosine similarity scores produced by ll-MiniLM-L6-v2 represent geometric alignment between normalized 384-dimensional dense vectors:
-
-1. **Relative proximity, not probabilities:** A cosine similarity of 0.6410 does not represent a 64% likelihood of correctness; it indicates angle closeness in semantic representation space.
-2. **Top-score range variation:** Top-1 scores ranged from **0.3546** (Query q06: 'Where is the leadership offsite and who is attending?') to **0.6410** (Query q10: 'Why did cloud costs go up this quarter?'). Even with a lower absolute score (0.3546), query q06 retrieved the exact correct target document (m06), demonstrating that ranking separation between candidates is what drives retrieval success, not an arbitrary absolute threshold.
-3. **Separation from distractors:** For specific queries with direct semantic matches, there is a prominent score margin between Rank 1 and lower ranks. For query q10, Rank 1 scored 0.6410, whereas Rank 2 scored 0.2028 (a margin of 0.4382). Irrelevant documents generally scored below 0.20-0.25.
-4. **Static threshold limitation:** Because scores vary according to query brevity and terminology overlap, applying a rigid cutoff threshold across different queries would either reject valid matches (if set too high, e.g. >0.40) or admit noisy false positives (if set too low).
-
-#### The u04 Document Explanation
-
-Query q10 asks: 'Why did cloud costs go up this quarter?'
-
-The retrieval system ranked **u04** (u04_update_q3_cloud_costs.txt) at **Rank 1 with a similarity score of 0.6410**, which was the highest similarity score in the entire benchmark.
-
-**Why u04 scored so high:**
-- **Direct semantic alignment:** Document u04 is titled 'Project Update: Q3 Cloud Cost Review' and directly answers the query's causal inquiry. It states:
-  - 'Total cloud spend for Q3 was Rs 18.4 lakh, up 12% from Q2.'
-  - 'The increase came from the Atlas staging servers and larger storage for the Orchid migration.'
-  - 'About 20% of compute instances ran idle outside working hours.'
-- **Vocabulary and concept overlap:** The bi-encoder model maps key query concepts ('cloud costs', 'go up', 'this quarter') directly to the document's core content ('cloud spend', 'up 12%', 'increase', 'Q3').
-- **Distractor distance:** The next best candidates were m05 (0.2028) and m01 (0.1856). While both mention project names like *Atlas*, neither discusses cloud infrastructure costs or quarterly budgeting. This large margin of **0.4382** ensured u04 was retrieved cleanly with zero ambiguity.
-
-### 7.5 Sentence Similarity
-Tested using sentence-transformers/all-MiniLM-L6-v2. Paraphrased statements ('The employee can work from home' vs 'Staff are allowed to work remotely') produced high cosine similarity (0.87), while contradictory sentences produced lower scores and unrelated statements approached zero, illustrating the model's ability to capture semantic intent beyond surface tokens.
-
-## 8. Strengths and Limitations
-
-**Strengths**
-- Pretrained models reduce training effort.
-- Effective for many language-understanding tasks.
-- Can be fine-tuned for specific datasets.
-- Hugging Face makes models accessible through a common API.
-
-**Limitations**
-- Results depend on training data and the selected checkpoint.
-- Predictions can be incorrect or misleading.
-- Some models are domain-specific.
-- Similarity scores are not automatically probabilities or measures of factual correctness.
-- Evaluation requires suitable test data and task-specific metrics.
-
-## 9. Model Licences
-
-| Model | Licence |
-|---|---|
-| `google-bert/bert-base-uncased` | Apache-2.0 |
-| `dslim/bert-base-NER` | MIT |
-| `distilbert/distilbert-base-uncased-finetuned-sst-2-english` | Apache-2.0 |
-| `sentence-transformers/all-MiniLM-L6-v2` | Apache-2.0 |
-
-Licences refer to these specific checkpoints. Always verify the model card and licence before redistributing or using a model commercially.
+- **Post-Processing Filtering for NER Roles:** Introduce dictionary-based post-filtering in `scripts/02_ner.py` to strip standard corporate job titles (`Data Scientist`, `Scrum Master`, `Analyst`) from organization predictions, directly addressing the 37 false positives recorded in `results/ner_evaluation_report.json`.
+- **Hybrid Retrieval Integration:** Combine dense embeddings from `scripts/04_semantic_search.py` with sparse BM25 keyword matching to prevent semantic drift on keyword-specific queries in larger document collections (`results/search_metrics_summary.txt`).
+- **Few-Shot Boundary Calibration for Topic Filtering:** Replace zero-shot single-sentence anchors in `scripts/05_topic_filter.py` with a small set of labeled exemplar embeddings to separate metaphorical health terminology (e.g. `page14`) and sports injuries (e.g. `page20`) from clinical care (`results/topic_filter_summary.txt`).
+- **Pipeline Automation and Regression Testing:** Maintain `scripts/run_all.py` as the standard automated CI gate to verify that any pattern or model checkpoint adjustment passes self-tests, semantic search, NER scoring, and topic filtering in a single execution.

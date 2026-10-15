@@ -4,8 +4,8 @@ Model: sentence-transformers/all-MiniLM-L6-v2
 Health description: "a page about health, illness or medical treatment"
 Not-health description: "a page not about health"
 Total pages evaluated: 20 (10 health, 10 not_health)
-Average inference time per page: 0.07259 seconds
-Total inference time: 1.4518 seconds
+Average inference time per page: 0.11652 seconds
+Total inference time: 2.3304 seconds
 
 BASELINE METRICS (health if sim_health > sim_not_health):
   Precision: 0.6
