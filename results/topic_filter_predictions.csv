@@ -1,0 +1,21 @@
+page_id,title,word_count,actual_label,sim_health,sim_not_health,margin,pred_baseline,is_correct_baseline,time_seconds
+page01,Seasonal Allergy Symptoms and Management,121,health,0.1086,0.0355,0.073,health,True,0.09157
+page02,Understanding Amoxicillin: Dosage and Indications,118,health,0.1493,0.0542,0.0951,health,True,0.07283
+page03,Dietary Guidelines for Managing Hypertension: The DASH Plan,126,health,0.0766,0.1277,-0.0511,not_health,False,0.07733
+page04,What to Expect During Your Annual Cardiology Consultation,126,health,0.1424,0.1976,-0.0552,not_health,False,0.07196
+page05,"Migraine Headaches: Phases, Triggers, and Treatment",121,health,0.1808,0.107,0.0738,health,True,0.07885
+page06,Insulin Regimens and Blood Glucose Control in Type 1 Diabetes,116,health,0.0779,0.1091,-0.0313,not_health,False,0.08255
+page07,Nutritional Therapy and Medical Management of Celiac Disease,118,health,0.1274,0.1019,0.0254,health,True,0.08825
+page08,Preparing for a Screening Colonoscopy: A Guide for Patients,113,health,0.0174,0.0546,-0.0372,not_health,False,0.06777
+page09,Cognitive Behavioral Therapy for Generalized Anxiety Disorder,110,health,0.1753,0.1239,0.0514,health,True,0.06315
+page10,Managing Pediatric Fever and Childhood Immunizations,107,health,0.1919,0.1157,0.0762,health,True,0.07586
+page11,Premier League Weekend: Tactical Mastery in London Derby,132,not_health,-0.0329,-0.0113,-0.0216,not_health,True,0.07855
+page12,"Three-Day Cultural Itinerary for Exploring Kyoto, Japan",122,not_health,0.0558,0.0549,0.0009,health,False,0.06955
+page13,Introduction to Low-Cost Index Fund Investing for Beginners,113,not_health,-0.0539,0.0013,-0.0552,not_health,True,0.07226
+page14,Modern Container Orchestration with Docker and Kubernetes,101,not_health,-0.0029,-0.0503,0.0474,health,False,0.05956
+page15,Authentic Neapolitan Pizza Dough: Technique and Fermentation,119,not_health,-0.0798,-0.0229,-0.0569,not_health,True,0.07126
+page16,First-Time Homebuyer Guide: Navigating Mortgages and Escrow,112,not_health,-0.0692,-0.0386,-0.0306,not_health,True,0.06424
+page17,Next-Generation GPU Architecture: 4K Gaming Benchmark Review,104,not_health,0.0245,0.0379,-0.0134,not_health,True,0.05828
+page18,Metropolitan Athletic Club: Fitness Center Amenities and Classes,133,not_health,0.1403,0.2296,-0.0893,not_health,True,0.06714
+page19,Decadent Homemade Salted Caramel Fudge: The Secret to Smooth Texture,135,not_health,-0.0304,-0.0321,0.0016,health,False,0.07155
+page20,All-Star Point Guard Sidelined with Ankle Sprain in Game 4 Defeat,149,not_health,0.0976,0.0464,0.0513,health,False,0.06924

@@ -1,0 +1,38 @@
+TOPIC FILTER EXPERIMENT SUMMARY
+======================================================================
+Model: sentence-transformers/all-MiniLM-L6-v2
+Health description: "a page about health, illness or medical treatment"
+Not-health description: "a page not about health"
+Total pages evaluated: 20 (10 health, 10 not_health)
+Average inference time per page: 0.07259 seconds
+Total inference time: 1.4518 seconds
+
+BASELINE METRICS (health if sim_health > sim_not_health):
+  Precision: 0.6
+  Recall:    0.6
+  F1-Score:  0.6
+  True Positives (TP):  6
+  False Positives (FP): 4
+  False Negatives (FN): 4
+  True Negatives (TN):  6
+
+MISCLASSIFIED PAGES UNDER BASELINE (8 total):
+  [page03] Actual: health     | Pred: not_health | Type: False Negative | Margin: -0.0511 | Title: Dietary Guidelines for Managing Hypertension: The DASH Plan
+  [page04] Actual: health     | Pred: not_health | Type: False Negative | Margin: -0.0552 | Title: What to Expect During Your Annual Cardiology Consultation
+  [page06] Actual: health     | Pred: not_health | Type: False Negative | Margin: -0.0313 | Title: Insulin Regimens and Blood Glucose Control in Type 1 Diabetes
+  [page08] Actual: health     | Pred: not_health | Type: False Negative | Margin: -0.0372 | Title: Preparing for a Screening Colonoscopy: A Guide for Patients
+  [page12] Actual: not_health | Pred: health     | Type: False Positive | Margin: +0.0009 | Title: Three-Day Cultural Itinerary for Exploring Kyoto, Japan
+  [page14] Actual: not_health | Pred: health     | Type: False Positive | Margin: +0.0474 | Title: Modern Container Orchestration with Docker and Kubernetes
+  [page19] Actual: not_health | Pred: health     | Type: False Positive | Margin: +0.0016 | Title: Decadent Homemade Salted Caramel Fudge: The Secret to Smooth Texture
+  [page20] Actual: not_health | Pred: health     | Type: False Positive | Margin: +0.0513 | Title: All-Star Point Guard Sidelined with Ankle Sprain in Game 4 Defeat
+
+SIMILARITY MARGIN THRESHOLD ANALYSIS:
+Threshold   Rule                        Precision   Recall    F1      FP    FN    
+----------------------------------------------------------------------------
+ -0.06      health if margin > -0.06      0.5263      1.0000  0.6896     9     0
+ +0.00      health if margin > +0.00      0.6000      0.6000  0.6000     4     4
+ +0.05      health if margin > +0.05      0.8333      0.5000  0.6250     1     5
+
+RECOMMENDATION:
+  If missing a health page is worse than letting a non-health page through, we must minimize False Negatives to maximize Recall for health. Threshold tau = -0.06 achieves Recall = 100.0%, capturing all 10 true health pages with 0 false negatives, whereas higher thresholds (0.00 and +0.05) miss subtle health pages like specialized clinic visits and dietary condition plans.
+======================================================================

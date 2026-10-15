@@ -1,0 +1,143 @@
+{
+  "experiment": "Topic filter with zero-shot label embedding similarity",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "label_descriptions": {
+    "health": "a page about health, illness or medical treatment",
+    "not_health": "a page not about health"
+  },
+  "timing": {
+    "model_load_seconds": 5.2692,
+    "total_inference_seconds": 1.4518,
+    "avg_time_per_page_seconds": 0.07259,
+    "total_pages": 20
+  },
+  "baseline_decision_rule": "health if sim_health > sim_not_health (margin > 0.00)",
+  "baseline_metrics": {
+    "tp": 6,
+    "fp": 4,
+    "fn": 4,
+    "tn": 6,
+    "precision": 0.6,
+    "recall": 0.6,
+    "f1": 0.6,
+    "total": 20
+  },
+  "wrong_pages_baseline": [
+    {
+      "page_id": "page03",
+      "title": "Dietary Guidelines for Managing Hypertension: The DASH Plan",
+      "actual_label": "health",
+      "predicted_label": "not_health",
+      "sim_health": 0.0766,
+      "sim_not_health": 0.1277,
+      "margin": -0.0511,
+      "error_type": "False Negative"
+    },
+    {
+      "page_id": "page04",
+      "title": "What to Expect During Your Annual Cardiology Consultation",
+      "actual_label": "health",
+      "predicted_label": "not_health",
+      "sim_health": 0.1424,
+      "sim_not_health": 0.1976,
+      "margin": -0.0552,
+      "error_type": "False Negative"
+    },
+    {
+      "page_id": "page06",
+      "title": "Insulin Regimens and Blood Glucose Control in Type 1 Diabetes",
+      "actual_label": "health",
+      "predicted_label": "not_health",
+      "sim_health": 0.0779,
+      "sim_not_health": 0.1091,
+      "margin": -0.0313,
+      "error_type": "False Negative"
+    },
+    {
+      "page_id": "page08",
+      "title": "Preparing for a Screening Colonoscopy: A Guide for Patients",
+      "actual_label": "health",
+      "predicted_label": "not_health",
+      "sim_health": 0.0174,
+      "sim_not_health": 0.0546,
+      "margin": -0.0372,
+      "error_type": "False Negative"
+    },
+    {
+      "page_id": "page12",
+      "title": "Three-Day Cultural Itinerary for Exploring Kyoto, Japan",
+      "actual_label": "not_health",
+      "predicted_label": "health",
+      "sim_health": 0.0558,
+      "sim_not_health": 0.0549,
+      "margin": 0.0009,
+      "error_type": "False Positive"
+    },
+    {
+      "page_id": "page14",
+      "title": "Modern Container Orchestration with Docker and Kubernetes",
+      "actual_label": "not_health",
+      "predicted_label": "health",
+      "sim_health": -0.0029,
+      "sim_not_health": -0.0503,
+      "margin": 0.0474,
+      "error_type": "False Positive"
+    },
+    {
+      "page_id": "page19",
+      "title": "Decadent Homemade Salted Caramel Fudge: The Secret to Smooth Texture",
+      "actual_label": "not_health",
+      "predicted_label": "health",
+      "sim_health": -0.0304,
+      "sim_not_health": -0.0321,
+      "margin": 0.0016,
+      "error_type": "False Positive"
+    },
+    {
+      "page_id": "page20",
+      "title": "All-Star Point Guard Sidelined with Ankle Sprain in Game 4 Defeat",
+      "actual_label": "not_health",
+      "predicted_label": "health",
+      "sim_health": 0.0976,
+      "sim_not_health": 0.0464,
+      "margin": 0.0513,
+      "error_type": "False Positive"
+    }
+  ],
+  "threshold_analysis": [
+    {
+      "threshold_margin": -0.06,
+      "rule": "health if margin > -0.06",
+      "precision": 0.5263,
+      "recall": 1.0,
+      "f1": 0.6896,
+      "tp": 10,
+      "fp": 9,
+      "fn": 0,
+      "tn": 1
+    },
+    {
+      "threshold_margin": 0.0,
+      "rule": "health if margin > +0.00",
+      "precision": 0.6,
+      "recall": 0.6,
+      "f1": 0.6,
+      "tp": 6,
+      "fp": 4,
+      "fn": 4,
+      "tn": 6
+    },
+    {
+      "threshold_margin": 0.05,
+      "rule": "health if margin > +0.05",
+      "precision": 0.8333,
+      "recall": 0.5,
+      "f1": 0.625,
+      "tp": 5,
+      "fp": 1,
+      "fn": 5,
+      "tn": 9
+    }
+  ],
+  "threshold_recommendation": "If missing a health page is worse than letting a non-health page through, we must minimize False Negatives to maximize Recall for health. Threshold tau = -0.06 achieves Recall = 100.0%, capturing all 10 true health pages with 0 false negatives, whereas higher thresholds (0.00 and +0.05) miss subtle health pages like specialized clinic visits and dietary condition plans."
+}
