@@ -27,4 +27,9 @@ desktop.ini
 
 # Temporary files
 *.tmp
-*.log
+*.log 
+# Spreadsheets and URL datasets
+*.xlsx
+*.xls
+*checkpoint*
+*test123*
