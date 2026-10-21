@@ -33,3 +33,6 @@ desktop.ini
 *.xls
 *checkpoint*
 *test123*
+
+# Cache files
+data/scraped_pages_cache.json
