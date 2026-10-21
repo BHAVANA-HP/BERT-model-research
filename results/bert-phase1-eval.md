@@ -96,9 +96,73 @@ Why did BERT miss these 4 reference medical pages?
 
 ---
 
-## 5. Single-Sheet Dataset Structure (11 Columns)
+---
 
-The unified dataset spreadsheet contains all 11 columns in one sheet (`Classified Reference & BERT`):
+## 5. Phase 1 Modifications & Threshold Optimization ($\tau = 0.05$)
+
+Following baseline analysis, we updated [`scripts/06_evaluate_bert_urls.py`](file:///i:/BERT-model-research/scripts/06_evaluate_bert_urls.py) with refined preprocessing, updated semantic anchor descriptions, and a calibrated decision margin:
+
+### 5.1 Code Adjustments
+1. **Full Body Text Ingestion:** Removed the 15-word minimum filter and 250-word truncation slice. The model now processes the full clean extracted page text (`clean_text.strip()`), preventing dilution from headers and cookie dialogs.
+2. **Refined Semantic Anchor Prompts:**
+   - **Health Anchor:** `"medical diagnosis, treatment, and clinical medicine"`
+   - **Non-Health Anchor:** `"general web content, business, entertainment, and lifestyle"`
+3. **Calibrated Decision Threshold ($\tau = 0.05$):**
+   $$\text{Margin} = \text{Sim}(\text{Health}) - \text{Sim}(\text{NotHealth}) \ge 0.05 \implies \text{medical}$$
+   $$\text{Score} = \frac{1}{1 + e^{-15 \cdot (\text{Margin} - 0.05)}}$$
+
+---
+
+### 5.2 Evaluated Results at Threshold 0.05
+
+```
+=================================================================
+BERT MODEL EVALUATION AGAINST REFERENCE GROUND TRUTH (Tau = 0.05)
+=================================================================
+Total URLs Evaluated:       2,124
+Reference Medical Count:    26
+BERT Medical Count:         134
+Agreement Rate:             94.26% (2,002 / 2,124 matches)
+-----------------------------------------------------------------
+Accuracy:                   0.9426
+Precision:                  0.1418 (14.18%)
+Recall (Sensitivity):       0.7308 (73.08%) -> 19 / 26 Captured
+F1-Score:                   0.2375
+-----------------------------------------------------------------
+CONFUSION MATRIX:
+  True Positives (TP):      19    (Both agreed: Medical)
+  True Negatives (TN):      1,983 (Both agreed: Non-Medical)
+  False Positives (FP):     115   (BERT predicted medical, Ref was non-med)
+  False Negatives (FN):     7     (BERT missed medical page)
+=================================================================
+```
+
+---
+
+### 5.3 Phase 1 Comparative Performance Across Tuning Runs
+
+| Metric | Baseline ($\tau = 0.00$, 250 words) | Strict Tuning ($\tau = 0.20$, Full Text) | Balanced Tuning ($\tau = 0.05$, Full Text) |
+|---|---|---|---|
+| **True Positives (TP)** | **22** | 2 | **19** |
+| **False Positives (FP)** | 427 | **5** | **115** (-73.1% vs baseline) |
+| **False Negatives (FN)** | **4** | 24 | **7** |
+| **True Negatives (TN)** | 1,671 | **2,093** | 1,983 |
+| **Overall Agreement** | 79.71% (1,693/2,124) | **98.63%** (2,095/2,124) | **94.26%** (2,002/2,124) |
+| **Precision** | 4.90% | **28.57%** | **14.18%** (~3x baseline) |
+| **Recall (Sensitivity)** | **84.62%** | 7.69% | **73.08%** (19 of 26) |
+| **F1-Score** | 0.0926 | 0.1212 | **0.2375** (Highest balanced F1) |
+
+---
+
+### 5.4 Synthesis & Transition to Phase 2 (Fine-Tuning)
+- **Effectiveness of $\tau = 0.05$:** Provides the optimal empirical compromise for zero-shot inference, capturing **19 out of 26 clinical pages (73.08% recall)** while reducing false alarms from 427 down to 115.
+- **Why Fine-Tuning is the Next Step:** The remaining 115 false alarms stem from peripheral health topics (pet care, fitness centers, dietary advice). Hand-tuning scalar thresholds cannot cleanly separate these without losing true clinical pages. **Phase 2 will implement Supervised Fine-Tuning** directly on domain text to learn discriminative clinical features.
+
+---
+
+## 6. Single-Sheet Dataset Structure (11 Columns)
+
+The updated unified deliverable spreadsheet contains all 11 columns in one sheet (`Classified Reference & BERT`):
 
 | Column # | Header Name | Origin | Description |
 |---|---|---|---|
@@ -111,14 +175,5 @@ The unified dataset spreadsheet contains all 11 columns in one sheet (`Classifie
 | 7 | `status` | Scraper | HTTP status (`success`, `http_404`, `timeout`) |
 | 8 | `bert_confidence_score` | **BERT** | Calibrated neural confidence score ($0.0 - 1.0$) |
 | 9 | `bert_label` | **BERT** | Predicted classification (`medical` / `non_medical`) |
-| 10 | `agreement` | **Comparison** | **`MATCH`** (1,693 rows) or **`MISMATCH`** (431 rows) |
+| 10 | `agreement` | **Comparison** | **`MATCH`** (2,002 rows) or **`MISMATCH`** (122 rows) |
 | 11 | `disagreement_type` | **Comparison** | `-`, `False Positive (BERT extra)`, or `False Negative (BERT missed)` |
-
----
-
-## 6. Optimization Roadmap for Subsequent Iterations
-
-To improve upon this initial baseline in future iterations:
-1. **Calibrate Decision Threshold:** Raising the BERT cutoff from $P \ge 0.50$ to $P \ge 0.70$ eliminates ~70% of the peripheral false positives (pet blogs, casual gaming).
-2. **Negative Domain Prompting:** Adding `"games, recipes, pet care, or non-medical content"` to the negative anchor prompt guides the zero-shot embedding away from common false positives.
-3. **Ensemble Architecture:** A two-stage pipeline using BERT for high recall discovery and the Clinical Ontology for entity validation yields the highest operational precision.

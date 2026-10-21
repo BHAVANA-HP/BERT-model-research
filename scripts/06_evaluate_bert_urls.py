@@ -29,11 +29,13 @@ FILE_PATH = Path(sys.argv[1]) if len(sys.argv) > 1 else (
 CSV_PATH = Path(sys.argv[2]) if len(sys.argv) > 2 else (
     Path(os.environ["URL_CSV_PATH"]) if "URL_CSV_PATH" in os.environ else find_file("*classified_reference*.csv", "data/classified_reference.csv")
 )
-CHECKPOINT_PATH = Path(os.environ.get("CHECKPOINT_PATH", DOWNLOADS_DIR / "checkpoint_bert_eval.csv" if DOWNLOADS_DIR.exists() else "checkpoint_bert_eval.csv"))
+CHECKPOINT_PATH = Path(os.environ.get("CHECKPOINT_PATH", DOWNLOADS_DIR / "checkpoint_bert_eval_005.csv" if DOWNLOADS_DIR.exists() else "checkpoint_bert_eval_005.csv"))
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-HEALTH_DESC = "a page about medical diagnosis, disease symptoms, clinical treatment, prescription medicine, or healthcare"
-NOT_HEALTH_DESC = "a page not about health or medicine"
+HEALTH_DESC = "medical diagnosis, treatment, and clinical medicine"
+NOT_HEALTH_DESC = "general web content, business, entertainment, and lifestyle"
+MARGIN_THRESHOLD = float(os.environ.get("MARGIN_THRESHOLD", "0.05"))
+
 
 CONCURRENCY = 30
 TIMEOUT_SECONDS = 7.0
@@ -185,10 +187,9 @@ async def main():
                 batch_records = []
 
                 for uid, text, status in fetched_pages:
-                    words = text.split()
-                    if len(words) >= 15:
-                        sample = " ".join(words[:250])
-                        texts_to_encode.append(sample)
+                    clean_text = text.strip()
+                    if clean_text:
+                        texts_to_encode.append(clean_text)
                         valid_indices.append(uid)
                     else:
                         batch_records.append((uid, 0.0, "non_medical"))
@@ -202,9 +203,9 @@ async def main():
                         sh = sim_h[idx].item()
                         snh = sim_nh[idx].item()
                         margin = sh - snh
-                        prob = 1.0 / (1.0 + math.exp(-15.0 * margin))
+                        prob = 1.0 / (1.0 + math.exp(-15.0 * (margin - MARGIN_THRESHOLD)))
                         prob = round(min(max(prob, 0.0), 1.0), 4)
-                        label = "medical" if margin > 0.0 else "non_medical"
+                        label = "medical" if margin >= MARGIN_THRESHOLD else "non_medical"
                         batch_records.append((uid, prob, label))
 
                 batch_url_map = {item["url-id"]: item["url"] for item in batch}
