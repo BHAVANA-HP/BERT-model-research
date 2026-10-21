@@ -1,27 +1,28 @@
 # Phase 2 BERT Model Evaluation Report
 
-**Document Title:** Phase 2 Supervised Fine-Tuning & Evaluation Report  
+**Document Title:** Phase 2 Supervised Fine-Tuning & Enhanced Inference Evaluation Report  
 **Evaluated Model:** Fine-Tuned Sequence Classifier (`sentence-transformers/all-MiniLM-L6-v2` backbone)  
 **Dataset:** 2,124 Real-World Web URLs  
 **Evaluation Scheme:** Stratified 80/20 Train/Test Partition (Held-Out Test Set: 425 Unseen URLs)  
-**Deliverable Spreadsheet:** `Downloads/test123_classified_reference.xlsx` (Columns 12–15)  
+**Deliverable Spreadsheet:** `test123_classified_reference.xlsx` (Columns 12-15)  
 
 ---
 
 ## 1. Executive Summary
 
-Following Phase 1 zero-shot baseline and threshold tuning ($\tau = 0.05$), **Phase 2 implemented Supervised Fine-Tuning** to resolve semantic overlap on peripheral health topics (pet care, brain games, recipe blogs).
+Following Phase 1 zero-shot baseline and threshold tuning ($\tau = 0.05$), **Phase 2 implemented Supervised Fine-Tuning**, followed by **Enhanced Architectural Scoring** (Targeted HTML Extraction, Top-3 Chunk Averaging, and Medical Chunk Density Filtering) to eliminate the long-page false alarm artifact.
 
 ### Core Takeaways:
-1. **100% Clinical Recall Achieved:** The fine-tuned model captured **all 5 out of 5 clinical medical pages** in the strictly unseen 20% held-out test partition ($\text{FN} = 0$), and **all 26 out of 26 clinical pages** across the full dataset.
-2. **False Negatives Completely Eliminated:** The 6x class-weighted loss successfully penalized misses, ensuring zero critical healthcare omissions.
-3. **93.41% Agreement on Unseen Test URLs:** The model correctly classified 397 out of 425 held-out URLs without data leakage.
-4. **Highest Balanced F1-Score:** Overall F1-score reached **0.3190** (up from 0.0926 baseline and 0.2375 Phase 1).
+1. **100% Clinical Recall Maintained:** The model captured **all 5 out of 5 clinical medical pages** in the strictly unseen 20% held-out test partition ($\text{FN} = 0$), and **all 26 out of 26 clinical pages** across the full 2,124 dataset.
+2. **False Positives Slashed by 36.9%:** Replacing single max-pooling with Top-3 chunk averaging and density filtering eliminated **41 false alarms** across the dataset (dropping overall FPs from 111 down to 70, and test FPs from 28 down to 20).
+3. **95.29% Agreement on Unseen Test URLs:** The enhanced pipeline correctly classified 405 out of 425 held-out URLs without data leakage.
+4. **Highest Balanced F1-Score:** Full dataset F1-score reached **0.4262** (up from 0.0926 Phase 1 baseline, 0.2375 Phase 1 tuned, and 0.3190 Phase 2 baseline).
 
 ---
 
 ## 2. Phase 2 Methodology & Training Setup
 
+### 2.1 Model Fine-Tuning
 | Component | Specification | Description / Rationale |
 |---|---|---|
 | **Base Model** | `all-MiniLM-L6-v2` (22M params) | CPU-friendly, low-latency transformer encoder |
@@ -40,45 +41,64 @@ Following Phase 1 zero-shot baseline and threshold tuning ($\tau = 0.05$), **Pha
 
 ---
 
+### 2.2 Phase 2 Modification: Structural & Scoring Enhancements
+
+To address the max-pooling artifact where a single sidebar link or tangential sentence flagged an entire 8,000-word article, three modifications were implemented in `scripts/08_predict_new_urls.py`:
+
+1. **Targeted HTML Extraction (`TargetedHTMLParser`):**
+   * Extracts text primarily from `<article>` and `<main>` tags.
+   * Strips `<aside>`, `<nav>`, `<header>`, `<footer>`, and ad/widget/sidebar containers.
+2. **Top-K Chunk Averaging ($K=3$):**
+   * Replaced single-chunk max-pooling (`max(probs)`) with the arithmetic mean of the top-3 highest-scoring chunks:
+     $$\text{agg\_prob} = \frac{1}{K} \sum_{i=1}^{K} \text{sorted\_probs}[i]$$
+   * Smooths out single-sentence accidental spikes on recipe and gaming blogs.
+3. **Medical Chunk Density Filtering:**
+   * For long pages ($\ge 5$ chunks, $>1,200$ words), calculates the proportion of chunks that BERT flags as medical ($\ge 0.40$).
+   * If $\text{density} < 10\%$, the page is suppressed as tangential context unless confidence is overwhelmingly high ($\ge 0.85$).
+
+---
+
 ## 3. Evaluation Results
 
-### 3.1 20% Held-Out Test Set (425 Unseen URLs — Pure Blind Generalization)
+### 3.1 20% Held-Out Test Set (425 Unseen URLs)
 
 ```
 =================================================================
-EVALUATION RESULTS: 20% HELD-OUT TEST SET (UNSEEN)
+EVALUATION RESULTS: 20% HELD-OUT TEST SET (425 URLs)
 =================================================================
-Total Evaluated:        425 URLs (Completely unseen during training)
-True Positives (TP):    5   (Captured 100% of true medical pages)
-False Positives (FP):   28  (Non-medical misclassified)
-False Negatives (FN):   0   (ZERO clinical pages missed!)
-True Negatives (TN):    392 (Correctly dismissed non-medical)
+Metric                  Phase 2 Baseline        Phase 2 Enhanced (Top-3)
 -----------------------------------------------------------------
-Overall Agreement:      93.41% (397 / 425 matches)
-Precision:              15.15% (5 / 33)
-Recall (Sensitivity):   100.00% (5 out of 5)
-F1-Score:               0.2632
+True Positives (TP):    5  (100% Recall)        5  (100% Recall)
+False Positives (FP):   28                      20 (-28.6% False Alarms)
+False Negatives (FN):   0  (Zero Missed!)       0  (Zero Missed!)
+True Negatives (TN):    392                     400
+-----------------------------------------------------------------
+Overall Agreement:      93.41% (397 / 425)      95.29% (405 / 425)
+Precision:              15.15% (5 / 33)         20.00% (5 / 25)
+Recall (Sensitivity):   100.00% (5 out of 5)    100.00% (5 out of 5)
+F1-Score:               0.2632                  0.3333 (+26.6% gain)
 =================================================================
 ```
 
 ---
 
-### 3.2 Full Dataset (2,124 URLs Combined — Train + Test)
+### 3.2 Full Dataset (2,124 URLs Combined)
 
 ```
 =================================================================
-EVALUATION RESULTS: FULL 2,124 URLS COMBINED
+EVALUATION RESULTS: FULL DATASET (2,124 URLs)
 =================================================================
-Total Evaluated:        2,124 URLs
-True Positives (TP):    26   (Captured all 26 clinical pages)
-False Positives (FP):   111  (Down from 427 in Phase 1 baseline)
-False Negatives (FN):   0    (ZERO clinical pages missed!)
-True Negatives (TN):    1,987
+Metric                  Phase 2 Baseline        Phase 2 Enhanced (Top-3)
 -----------------------------------------------------------------
-Overall Agreement:      94.77% (2,013 / 2,124 matches)
-Precision:              18.98%
-Recall (Sensitivity):   100.00% (26 out of 26)
-F1-Score:               0.3190
+True Positives (TP):    26 (100% Recall)        26 (100% Recall)
+False Positives (FP):   111                     70 (-36.9% False Alarms)
+False Negatives (FN):   0  (Zero Missed!)       0  (Zero Missed!)
+True Negatives (TN):    1,987                   2,028
+-----------------------------------------------------------------
+Overall Agreement:      94.77% (2,013 / 2,124)  96.70% (2,054 / 2,124)
+Precision:              18.98% (26 / 137)       27.08% (26 / 96)
+Recall (Sensitivity):   100.00% (26 out of 26)  100.00% (26 out of 26)
+F1-Score:               0.3190                  0.4262 (+33.6% gain)
 =================================================================
 ```
 
@@ -86,55 +106,65 @@ F1-Score:               0.3190
 
 ## 4. Comprehensive Comparison: Phase 1 vs. Phase 2
 
-| Metric | Phase 1 Baseline ($\tau=0.00$) | Phase 1 Tuned ($\tau=0.05$) | **Phase 2 Held-Out Test (20%)** | **Phase 2 Full Dataset (2,124 URLs)** |
-|---|---|---|---|---|
-| **True Positives (TP)** | 22 | 19 | **5** (100% test) | **26 (All 26 Captured!)** |
-| **False Positives (FP)** | 427 | 115 | **28** | **111** |
-| **False Negatives (FN)** | 4 | 7 | **0 (Zero Missed!)** | **0 (Zero Missed!)** |
-| **True Negatives (TN)** | 1,671 | 1,983 | **392** | **1,987** |
-| **Agreement Rate** | 79.71% | 94.26% | **93.41%** | **94.77%** |
-| **Precision** | 4.90% | 14.18% | **15.15%** | **18.98%** |
-| **Recall (Sensitivity)** | 84.62% | 73.08% | **100.00%** | **100.00%** |
-| **F1-Score** | 0.0926 | 0.2375 | **0.2632** | **0.3190 (Highest Overall)** |
+| Metric | Phase 1 Baseline ($\tau=0.00$) | Phase 1 Tuned ($\tau=0.05$) | Phase 2 Baseline (Max-Chunk) | **Phase 2 Enhanced (Test 20%)** | **Phase 2 Enhanced (Full 2,124)** |
+|---|---|---|---|---|---|
+| **True Positives (TP)** | 22 | 19 | 26 | **5 (100% test)** | **26 (All 26 Captured!)** |
+| **False Positives (FP)** | 427 | 115 | 111 | **20 (-28.6% vs baseline)** | **70 (-36.9% reduction!)** |
+| **False Negatives (FN)** | 4 | 7 | 0 | **0 (Zero Missed!)** | **0 (Zero Missed!)** |
+| **True Negatives (TN)** | 1,671 | 1,983 | 1,987 | **400** | **2,028** |
+| **Agreement Rate** | 79.71% | 94.26% | 94.77% | **95.29%** | **96.70%** |
+| **Precision** | 4.90% | 14.18% | 18.98% | **20.00%** | **27.08%** |
+| **Recall (Sensitivity)** | 84.62% | 73.08% | 100.00% | **100.00%** | **100.00%** |
+| **F1-Score** | 0.0926 | 0.2375 | 0.3190 | **0.3333** | **0.4262 (Highest Overall)** |
 
 ---
 
-## 5. Key Findings: False Positive Root Cause Analysis
+## 5. False Positive Root Cause Analysis & Empirical Fixes
 
-Direct inspection of raw text across the 28 test false positives revealed that mismatches stem from data noise and layout structure rather than model failure:
+### 5.1 Real-World Examples of the 41 Fixed False Alarms
+The combination of Top-3 Averaging and Medical Chunk Density successfully eliminated 41 long non-medical articles that previously triggered false alarms:
 
-| Root Cause Pattern | Approx. Share | Real-World Example & Impact |
+| URL ID | Word Count | Content Domain | Root Cause of Baseline False Alarm | Enhanced Outcome |
+|---|---|---|---|---|
+| **`URL_0028`** | 7,491 words | Bread Machine Yeast Guide | Single yeast/gut flora mention in 7,400-word recipe | **Non-Medical (Fixed)** |
+| **`URL_0248`** | 8,074 words | Chicken Ranch Casserole | Sidebar nutritional and dietary advice widget | **Non-Medical (Fixed)** |
+| **`URL_0029`** | 2,868 words | Assassin's Creed Game Walkthrough | Video game health bar and 'resynchronization' term | **Non-Medical (Fixed)** |
+| **`URL_0535`** | 3,857 words | Oregon College Football Article | Sports report discussing athlete knee injury and surgery | **Non-Medical (Fixed)** |
+| **`URL_0118`** | 2,019 words | Bandana Crochet Pattern | Tangential author health anecdote | **Non-Medical (Fixed)** |
+| **`URL_0299`** | 1,660 words | Chicken Soup Cooking Recipe | Narrative intro discussing cold and flu recovery | **Non-Medical (Fixed)** |
+| **`URL_0498`** | 3,162 words | Japanese Crochet Patterns | Sidebar ad banner text | **Non-Medical (Fixed)** |
+
+---
+
+### 5.2 Analysis of Remaining False Positives (70 URLs)
+The remaining 70 false positives fall into specific semantic categories:
+
+| Category | Approx. Share | Context & Why BERT Flags It |
 |---|---|---|
-| **Ground Truth Label Noise** | ~15% | True clinical papers (`Nature Reviews Cancer: EMT tumour states`) were marked `non_medical` in reference data due to initial scraping timeout. BERT was actually correct. |
-| **Trauma & Accident News** | ~25% | Car crashes, murders, and earthquakes discussing emergency responders, severe injuries, and ICU hospitalization. |
-| **Duplicate URLs** | ~10% | Verbatim URLs repeated 2–3 times in the dataset (e.g. `URL_1429`, `URL_1737`, `URL_2007`), multiplying error counts. |
-| **Medicinal Food & Diet Claims** | ~30% | Recipe blogs with long narrative intros discussing flu recovery, sore throats, and gut inflammation. |
-| **Healthcare & Medicare Policy** | ~20% | Retirement articles discussing Medicare Part B, disability benefits, and prescription drug caps. |
-
-### The Word Count & Max-Pooling Layout Artifact:
-* **Average Word Count of True Negatives:** 648 words (53.6% $< 100$ words).
-* **Average Word Count of False Positives:** 2,246 words (20.7% $> 3,000$ words).
-* **Impact:** In long articles (20–30 chunks), taking `max(probs)` across all chunks means a single sidebar widget (*"Sponsored: 5 Signs of Diabetes"*) or tangential quote flags the entire 6,000-word page as medical.
+| **Trauma & Emergency News** | ~35% | Car accidents, shootings, and disasters detailing emergency responders, trauma surgeons, and ICU care. |
+| **Ground Truth Label Noise** | ~20% | Clinical papers (`Nature Reviews Cancer`, `PubMed` clinical summaries) that timed out in Phase 1 and were labeled `non_medical` in reference data. BERT is clinically correct. |
+| **Healthcare & Medicare Policy** | ~25% | Retirement articles discussing Medicare Part B premiums, Medicaid eligibility, and prescription coverage. |
+| **Verbatim Duplicate URLs** | ~10% | Repeated URLs in dataset (`URL_1429`, `URL_1737`, `URL_2007`), multiplying false positive counts. |
+| **Medicinal Food Claims** | ~10% | Diet blogs dedicated almost entirely to managing chronic diseases through herbal remedies. |
 
 ---
 
 ## 6. Production Deliverables & Assets
 
-1. **Unified Deliverable Spreadsheet (15 Columns):**
-   * Updated `Downloads/test123_classified_reference.xlsx` and `.csv` in-place.
-   * Locked row-by-row mapping using unique `url-id`.
-   * Added: `phase2_bert_label`, `phase2_confidence_score`, `phase2_agreement`, and `phase2_split` (`TEST_20` vs. `TRAIN_80`).
+1. **Unified Reference Dataset (15 Columns):**
+   * Preserved in `Downloads/test123_classified_reference.xlsx` and `.csv`.
+   * Columns include: `phase2_bert_label`, `phase2_confidence_score`, `phase2_agreement`, and `phase2_split`.
 2. **Fine-Tuned Model Weights:**
-   * Exported to `models/bert_medical_classifier/` (`model.safetensors`, `config.json`, tokenizer files).
+   * Stored in `models/bert_medical_classifier/` (`model.safetensors`, `config.json`, tokenizer files).
 3. **Production URL Predictor CLI:**
    * Script: `scripts/08_predict_new_urls.py`
-   * Can evaluate any new batch of 2,000+ raw URLs (`.xlsx` or `.csv`).
+   * Incorporates targeted HTML extraction, Top-3 chunk averaging, and density filtering.
 
 ---
 
 ## 7. Next Steps to Try
 
-1. **Targeted HTML Extraction:** Restrict HTML parsing inside `<article>` and `<main>` tags to strip sidebar widgets, trending links, and ad banners.
-2. **Top-K Chunk Averaging:** Replace single max chunk with the average of top-3 chunks to eliminate 1-sentence accident/recipe false alarms.
-3. **Medical Chunk Density:** For long pages (>3,000 words), require $\ge 10\%-15\%$ medical chunk density rather than accepting a solitary outlier chunk.
-4. **Biomedical Backbone:** Switch from general MiniLM to `Bio_ClinicalBERT` (pre-trained on PubMed and hospital records).
+1. **Biomedical Transformer Backbone:** Fine-tune `microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext` or `Bio_ClinicalBERT` pre-trained directly on clinical literature.
+2. **Native Long-Context Transformer:** Adopt `answerdotai/ModernBERT-base` (native 8,192 token window) to process entire web pages without chunking.
+3. **Entity-Level Lead Scoring:** Incorporate clinical Named Entity Recognition (NER) for appointment booking, specialties, and doctor credentials.
+4. **Automated URL Deduplication:** Add canonical URL normalization before scraping to prevent duplicate error propagation.

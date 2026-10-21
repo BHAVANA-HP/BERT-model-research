@@ -1,6 +1,9 @@
 """
 Production Inference Script: Predict Medical vs Non-Medical on New Unseen URLs.
-Can process any new batch of 2,000+ URLs from an Excel (.xlsx) or CSV file.
+Incorporates:
+1. Targeted HTML Extraction (focus on <article>/<main>, ignore <aside>/<nav>)
+2. Top-K Chunk Averaging (average of top-3 highest chunks instead of solitary max)
+3. Medical Chunk Density Filtering (suppresses isolated sidebar/tangential quotes on long pages)
 """
 
 import os
@@ -8,6 +11,7 @@ import sys
 import argparse
 import asyncio
 import csv
+import json
 import re
 from pathlib import Path
 from html.parser import HTMLParser
@@ -28,6 +32,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_MODEL_DIR = REPO_ROOT / "models" / "bert_medical_classifier"
 FALLBACK_BASE_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+CACHE_FILE = REPO_ROOT / "data" / "scraped_pages_cache.json"
 
 CONCURRENCY = 30
 TIMEOUT_SECONDS = 7.0
@@ -36,29 +41,37 @@ CHUNK_STRIDE = 64
 
 
 # ============================================================
-# 1. HTML PARSER & ASYNC SCRAPER
+# 1. TARGETED HTML EXTRACTION
 # ============================================================
 
-class CleanTextExtractor(HTMLParser):
-    def __init__(self):
+class TargetedTextExtractor(HTMLParser):
+    def __init__(self, has_main_container: bool = False):
         super().__init__()
         self.texts = []
-        self.ignore = False
+        self.has_main = has_main_container
+        self.in_main = not has_main_container
+        self.ignore_depth = 0
         self.ignore_tags = {
             "script", "style", "noscript", "header", "footer", "nav", "svg",
-            "aside", "select", "option", "iframe", "button"
+            "aside", "select", "option", "iframe", "button", "form"
         }
 
     def handle_starttag(self, tag, attrs):
-        if tag.lower() in self.ignore_tags:
-            self.ignore = True
+        tag_lower = tag.lower()
+        if tag_lower in self.ignore_tags:
+            self.ignore_depth += 1
+        if self.has_main and tag_lower in ("article", "main"):
+            self.in_main = True
 
     def handle_endtag(self, tag):
-        if tag.lower() in self.ignore_tags:
-            self.ignore = False
+        tag_lower = tag.lower()
+        if tag_lower in self.ignore_tags and self.ignore_depth > 0:
+            self.ignore_depth -= 1
+        if self.has_main and tag_lower in ("article", "main"):
+            self.in_main = False
 
     def handle_data(self, data):
-        if not self.ignore:
+        if self.ignore_depth == 0 and self.in_main:
             cleaned = data.strip()
             if cleaned:
                 self.texts.append(cleaned)
@@ -69,11 +82,19 @@ class CleanTextExtractor(HTMLParser):
 
 def extract_clean_text(html_content: str) -> str:
     try:
-        extractor = CleanTextExtractor()
+        # Check if page has structured article/main containers
+        has_main = bool(re.search(r"<(article|main)\b", html_content, re.IGNORECASE))
+        extractor = TargetedTextExtractor(has_main_container=has_main)
         extractor.feed(html_content)
-        return extractor.get_text()
+        result = extractor.get_text()
+        if len(result.split()) >= 30 or not has_main:
+            return result
+        # Fallback to general extraction if container was too sparse
+        fallback = TargetedTextExtractor(has_main_container=False)
+        fallback.feed(html_content)
+        return fallback.get_text()
     except Exception:
-        clean = re.sub(r"<(script|style|nav|footer)[^>]*>.*?</\1>", " ", html_content, flags=re.DOTALL | re.IGNORECASE)
+        clean = re.sub(r"<(script|style|nav|footer|aside|header)[^>]*>.*?</\1>", " ", html_content, flags=re.DOTALL | re.IGNORECASE)
         clean = re.sub(r"<[^>]+>", " ", clean)
         return " ".join(clean.split())
 
@@ -111,7 +132,7 @@ def chunk_text(text: str, chunk_size: int = CHUNK_SIZE, stride: int = CHUNK_STRI
 
 
 # ============================================================
-# 2. INFERENCE ENGINE
+# 2. INFERENCE WITH TOP-K AVERAGING & DENSITY FILTERING
 # ============================================================
 
 @torch.no_grad()
@@ -123,7 +144,6 @@ def score_page(model, tokenizer, text: str) -> Tuple[str, float]:
     if not chunks:
         return "non_medical", 0.0
 
-    # Batch encode passages
     encodings = tokenizer(
         chunks,
         truncation=True,
@@ -133,10 +153,23 @@ def score_page(model, tokenizer, text: str) -> Tuple[str, float]:
     ).to(device)
 
     outputs = model(**encodings)
-    probs = torch.softmax(outputs.logits, dim=1)[:, 1]  # Medical class probability
-    max_medical_prob = float(torch.max(probs).cpu().item())
-    label = "medical" if max_medical_prob >= 0.50 else "non_medical"
-    return label, round(max_medical_prob, 4)
+    probs = torch.softmax(outputs.logits, dim=1)[:, 1].cpu().tolist()
+
+    # Improvement 1: Top-K Chunk Averaging (replaces single-chunk max)
+    sorted_probs = sorted(probs, reverse=True)
+    top_k = min(3, len(sorted_probs))
+    agg_prob = sum(sorted_probs[:top_k]) / top_k
+
+    # Improvement 2: Medical Chunk Density check for long pages (>= 5 chunks)
+    # If < 10% of page chunks contain medical content, suppress isolated sidebar/quote
+    if len(probs) >= 5:
+        med_chunks = sum(1 for p in probs if p >= 0.40)
+        density = med_chunks / len(probs)
+        if density < 0.10:
+            agg_prob = agg_prob * 0.40
+
+    label = "medical" if agg_prob >= 0.50 else "non_medical"
+    return label, round(agg_prob, 4)
 
 
 # ============================================================
@@ -154,7 +187,7 @@ def load_urls_from_file(file_path: Path) -> List[Dict]:
         for idx, h in enumerate(headers):
             if "url" in h and "id" not in h:
                 url_col_idx = idx + 1
-            if "id" in h:
+            if h.replace("-", "_") in ("url_id", "id"):
                 id_col_idx = idx + 1
         if url_col_idx is None:
             url_col_idx = 1
@@ -174,7 +207,7 @@ def load_urls_from_file(file_path: Path) -> List[Dict]:
             for col in reader.fieldnames:
                 if "url" in col.lower() and "id" not in col.lower():
                     url_col = col
-                if "id" in col.lower():
+                if col.lower().replace("-", "_") in ("url_id", "id"):
                     id_col = col
             if not url_col:
                 url_col = reader.fieldnames[0]
@@ -194,7 +227,7 @@ def load_urls_from_file(file_path: Path) -> List[Dict]:
 
 async def run_prediction_pipeline(input_file: Path, output_file: Path, model_dir: Path):
     print("=" * 65)
-    print("PRODUCTION BERT PREDICTOR ON NEW URLS")
+    print("PRODUCTION BERT PREDICTOR (WITH TOP-K & DENSITY FILTERING)")
     print("=" * 65)
     print(f"Input file:  {input_file}")
     print(f"Output file: {output_file}")
@@ -217,17 +250,30 @@ async def run_prediction_pipeline(input_file: Path, output_file: Path, model_dir
         model = AutoModelForSequenceClassification.from_pretrained(FALLBACK_BASE_MODEL, num_labels=2).to(device)
     model.eval()
 
-    # Async Scrape
-    print(f"\n[Scraper] Fetching {len(items)} URLs (concurrency={CONCURRENCY})...")
-    semaphore = asyncio.Semaphore(CONCURRENCY)
-    async with httpx.AsyncClient(verify=False) as client:
-        tasks = [fetch_page(client, semaphore, item["url_id"], item["url"]) for item in items]
-        scraped_results = await asyncio.gather(*tasks)
+    # Load or fetch scraped texts
+    cache = {}
+    if CACHE_FILE.exists():
+        try:
+            with open(CACHE_FILE, "r", encoding="utf-8") as f:
+                cache = json.load(f)
+            print(f"[Cache] Found {len(cache)} existing cached pages on disk.")
+        except Exception:
+            cache = {}
 
-    scraped_map = {res[0]: (res[1], res[2]) for res in scraped_results}
+    to_fetch = [item for item in items if item["url_id"] not in cache]
+    scraped_map = {uid: (cache[uid].get("text", ""), cache[uid].get("status", "cached")) for uid in cache}
+
+    if to_fetch:
+        print(f"\n[Scraper] Fetching {len(to_fetch)} new URLs (concurrency={CONCURRENCY})...")
+        semaphore = asyncio.Semaphore(CONCURRENCY)
+        async with httpx.AsyncClient(verify=False) as client:
+            tasks = [fetch_page(client, semaphore, item["url_id"], item["url"]) for item in to_fetch]
+            scraped_results = await asyncio.gather(*tasks)
+        for uid, txt, stat in scraped_results:
+            scraped_map[uid] = (txt, stat)
 
     # Predict
-    print(f"\n[Inference] Running neural prediction over extracted pages...")
+    print(f"\n[Inference] Scoring with Top-K Averaging & Density Filtering...")
     results = []
     medical_count = 0
     for idx, item in enumerate(items, 1):
@@ -292,4 +338,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
